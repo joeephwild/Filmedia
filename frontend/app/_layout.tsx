@@ -51,21 +51,22 @@ export default function RootLayout() {
 function RootLayoutNav() {
   const colorScheme = useColorScheme();
 
-
   return (
     <AuthProvider>
       {/* <View> */}
-        <Stack
-          screenOptions={{
-            contentStyle: {
-              backgroundColor: "#191414",
-            },
-          }}
-        >
-          <Stack.Screen name="(tabs)" options={{ headerShown: false }} />
-          <Stack.Screen name="modal" options={{ presentation: "modal" }} />
-        </Stack>
-        {/* {playerOpen && <MusicPlayer />} */}
+      <Stack
+        screenOptions={{
+          contentStyle: {
+            backgroundColor: "#191414",
+          },
+        }}
+      >
+        <Stack.Screen name="(tabs)" options={{ headerShown: false }} />
+        <Stack.Screen name="modal" options={{ presentation: "modal" }} />
+        <Stack.Screen name="profile" options={{ headerShown: false }} />
+        <Stack.Screen name="artist" options={{ headerShown: false }} />
+      </Stack>
+      {/* {playerOpen && <MusicPlayer />} */}
       {/* </View> */}
     </AuthProvider>
   );

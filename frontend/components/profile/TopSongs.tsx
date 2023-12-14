@@ -40,16 +40,19 @@ const TopSongs = () => {
   ];
 
   return (
-    <View className="w-full mx-4 px-9 pt-6">
+    <View className="w-full">
       <View className="flex-row items-center justify-between w-full">
         <Text className="text-[20px] font-bold text-[#fff]">
-        Top Songs
+          Songs made for you
         </Text>
         <View className="flex-row items-center space-x-1">
           <Text className="text-[12px] font-bold text-[#fff]">More</Text>
           <FontAwesome name="chevron-right" color="#fff" />
         </View>
       </View>
+
+      <RangeComponents />
+
       <ScrollView
         horizontal
         style={{
@@ -60,9 +63,9 @@ const TopSongs = () => {
         }}
       >
         <View className="flex-col space-y-6 mt-4 w-full overflow-hidden">
-          {songs.map((item, index) => (
-            <SongsCard key={index} {...item} />
-          ))}
+          {!songs
+            ? null
+            : songs?.map((val, i) => <SongsCard key={i} {...val} />)}
         </View>
       </ScrollView>
     </View>

@@ -81,8 +81,8 @@ const RangeComponents = ({ nfts }: Props) => {
                   active === item.active
                     ? "#4169E1"
                     : "rgba(65, 105, 225, 0.40);",
-                paddingHorizontal: 24,
-                paddingVertical: 12,
+                paddingHorizontal: 14,
+                paddingVertical: 8,
                 borderRadius: 20,
                 color: "white",
                 overflow: "hidden",

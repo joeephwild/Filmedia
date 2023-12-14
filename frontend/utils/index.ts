@@ -631,3 +631,36 @@ export const artistsnft = [
     ],
   },
 ];
+
+export const city = [
+  {
+    "city": "Paris",
+    "monument": "Eiffel Tower",
+    "image": "https://images.pexels.com/photos/338515/pexels-photo-338515.jpeg"
+  },
+  {
+    "city": "New York",
+    "monument": "Statue of Liberty",
+    "image": "https://images.pexels.com/photos/600622/pexels-photo-600622.jpeg"
+  },
+  {
+    "city": "Rome",
+    "monument": "Colosseum",
+    "image": "https://images.pexels.com/photos/753626/pexels-photo-753626.jpeg"
+  },
+  {
+    "city": "London",
+    "monument": "Big Ben",
+    "image": "https://images.pexels.com/photos/326807/pexels-photo-326807.jpeg?auto=compress&cs=tinysrgb&w=600"
+  },
+  {
+    "city": "Sydney",
+    "monument": "Sydney Opera House",
+    "image": "https://images.pexels.com/photos/462331/pexels-photo-462331.jpeg"
+  },
+  {
+    "city": "Cairo",
+    "monument": "Pyramids of Giza",
+    "image": "https://images.pexels.com/photos/3689859/pexels-photo-3689859.jpeg?auto=compress&cs=tinysrgb&w=600"
+  }
+]

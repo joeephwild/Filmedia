@@ -59,14 +59,14 @@ import { SafeAreaView } from "react-native-safe-area-context";
         <ScrollView
           showsVerticalScrollIndicator={false}
           contentContainerStyle={{
-            paddingHorizontal: 15,
-            paddingVertical: 20,
-            marginBottom: 190,
+            // paddingHorizontal: 15,
+            // paddingVertical: 20,
+            // marginBottom: 190,
           }}
           style={{
             marginBottom: 100,
             flex: 1,
-            height: "100%",
+            minHeight: "100%",
           }}
         >
           <View className="bg-transparent border-2 border-[#fff] w-full h-[48px] space-x-6 px-5 flex-row items-center rounded-[80px]">
