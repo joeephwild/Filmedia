@@ -12,14 +12,24 @@ import {
 } from "react-native";
 import Slider from "@react-native-community/slider";
 import LargeMusicPlayer from "./LargeMusicPlayer";
+import { useAuth } from "../context/AuthContext";
+import { FontAwesome } from "@expo/vector-icons";
 
-const MusicPlayer = () => {
-  const [isPlaying, setIsPlaying] = useState(false);
+type Props = {
+  currentlyplayed: {
+    image: string;
+    title: string;
+    url: string;
+    artist: string;
+  };
+};
+
+const MusicPlayer = ({ currentlyplayed }: Props) => {
+  // const [isPlaying, setIsPlaying] = useState(false);
   const [isOpen, setIsOpen] = useState(false);
   const [isFullScreen, setIsFullScreen] = useState(false);
   const [keyboardVisible, setKeyboardVisible] = useState(false);
 
-  const togglePlay = () => setIsPlaying(!isPlaying);
   const toggleFullScreen = () => setIsFullScreen(!isFullScreen);
 
   useEffect(() => {
@@ -36,33 +46,59 @@ const MusicPlayer = () => {
   const _keyboardDidShow = () => setKeyboardVisible(true);
   const _keyboardDidHide = () => setKeyboardVisible(false);
 
+  const { playSound, currentlyPlayed, isPlaying, pauseSound } = useAuth();
+
+  async function handlePlaySound() {
+    playSound(currentlyPlayed.url, currentlyPlayed);
+  }
+
   return (
     <>
       {!keyboardVisible && (
         <View style={[styles.container, isFullScreen && styles.fullScreen]}>
           {!isFullScreen && (
             <View className="space-y-1 px-2">
-              <View className="flex-row pt-1 items-center space-x-[117px]">
+              <View className="flex-row pt-1 items-center justify-between">
                 <View className="flex-row space-x-6 items-center">
                   <Pressable onPress={() => setIsFullScreen(!isFullScreen)}>
                     <Image
                       source={{
-                        uri: "https://images.pexels.com/photos/19230195/pexels-photo-19230195/free-photo-of-a-little-boy-standing-outside-and-showing-thumbs-up.jpeg?auto=compress&cs=tinysrgb&w=1600",
+                        uri: currentlyplayed.image
+                          ? currentlyplayed.image
+                          : "https://www.atlanticrecords.com/sites/g/files/g2000015596/files/styles/artist_image_detail/public/2023-01/080822_BB-ATLWebsite_300x300.png?itok=0HgtcAXi",
                       }}
-                      className="w-[65px] h-[65px] bg-black rounded-full "
+                      className="w-[45px] h-[45px] rounded-full "
                     />
                   </Pressable>
 
                   <View>
+                    <Text className="tet-[16px] font-bold text-[#fff]">
+                      {currentlyplayed.title}
+                    </Text>
                     <Text>Burna boy</Text>
-                    <Text>Alone</Text>
                   </View>
                 </View>
 
                 <View className="flex-row space-x-[16px]">
                   <Ionicons name="heart-outline" size={24} color="white" />
                   <Ionicons name="contrast" size={24} color="white" />
-                  <Ionicons name="play-circle-sharp" size={24} color="white" />
+                  <TouchableOpacity>
+                    {!isPlaying ? (
+                      <FontAwesome
+                        onPress={handlePlaySound}
+                        name="play-circle"
+                        color="#4169E1"
+                        size={24}
+                      />
+                    ) : (
+                      <FontAwesome
+                        onPress={pauseSound}
+                        name="pause-circle"
+                        color="#4169E1"
+                        size={24}
+                      />
+                    )}
+                  </TouchableOpacity>
                 </View>
               </View>
               <Slider

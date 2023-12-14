@@ -4,9 +4,9 @@ import FontAwesome from "@expo/vector-icons/FontAwesome";
 import RangeComponents from "../RangeComponents";
 import SongsCard from "../cards/SongsCard";
 import { ScrollView } from "react-native-gesture-handler";
-import { ApolloProvider, useQuery } from "@apollo/client";
-import { client } from "../../constants/addresses";
-import GET_LISTED_NFTS from "../../constants/subgraphQueries";
+// import { ApolloProvider, useQuery } from "@apollo/client";
+// import { client } from "../../constants/addresses";
+// import GET_LISTED_NFTS from "../../constants/subgraphQueries";
 import { songs } from "../../utils";
 
 const AllSongs = () => {
@@ -44,14 +44,14 @@ const AllSongs = () => {
   ];
 
   return (
-    <ApolloProvider client={client}>
+    // <ApolloProvider client={client}>
       <Music />
-    </ApolloProvider>
+    // </ApolloProvider>
   );
 };
 
 const Music = () => {
-  const { loading, error, data: listedNfts } = useQuery(GET_LISTED_NFTS);
+  // const { loading, error, data: listedNfts } = useQuery(GET_LISTED_NFTS);
 
   return (
     <View className="w-full">

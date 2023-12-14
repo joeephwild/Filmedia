@@ -1,10 +1,11 @@
-import { View, Text, Image, TouchableOpacity } from "react-native";
+import { View, Text, Image, TouchableOpacity, Pressable } from "react-native";
 import React from "react";
 import FontAwesome from "@expo/vector-icons/FontAwesome";
 import { Link } from "expo-router";
 import useGetNFTs from "../../constants/hooks/useGetNFT";
 import { artistNFTAddress } from "../../constants/addresses";
 import { Audio } from "expo-av";
+import { useAuth } from "../../context/AuthContext";
 
 type Props = {
   name: string;
@@ -21,34 +22,32 @@ const SongsCard = ({
   tokenId,
   external_url,
   description,
+  artist,
 }: Props) => {
   // const [imageURI, tokenName, tokenDescription, category] = useGetNFTs(
   //   tokenId,
   //   artistNFTAddress
   // );
+  const { playSound, currentlyPlayed, isPlaying, pauseSound } = useAuth();
 
-  async function playSound() {
-    await Audio.setAudioModeAsync({ playsInSilentModeIOS: true });
-    try {
-      const { sound: playbackObject } = await Audio.Sound.createAsync(
-        {
-          uri: external_url,
-        },
-        { shouldPlay: true }
-      );
+  async function handlePlaySound() {
+    const sound = {
+      image,
+      name,
+      external_url,
+      artist,
+    };
 
-      playbackObject.stopAsync();
-      // await soundObject.playAsync();
-      // Your sound is playing!
-    } catch (error) {
-      console.log("Error loading audio", error);
-    }
+    playSound(external_url, sound);
   }
 
   return (
-    <View className="flex-row items-center space-x-2 w-full pb-4">
-      <Text className="border-y text-[#fff] border-[#fff]">1</Text>
-      <View className="flex-row items-center space-x-[78px]">
+    <Pressable
+      onPress={handlePlaySound}
+      className="flex-row items-center justify-between px-2  pb-4"
+    >
+      <View className="flex-row items-center space-x-[8px]">
+        <Text className="border-y text-[#fff] border-[#fff]">1</Text>
         <View className="flex-row items-center space-x-6">
           <Image
             source={{
@@ -63,16 +62,30 @@ const SongsCard = ({
             <Text className="text-[#fff] text-[14px] font-semibold">
               {name}
             </Text>
-            <Text className="text-[#fff] w-[200px] text-[14px] font-semibold">
+            {/* <Text className="text-[#fff] w-[200px] text-[12px] font-semibold">
               {description}
-            </Text>
+            </Text> */}
           </View>
         </View>
-        <TouchableOpacity onPress={playSound}>
-          <FontAwesome name="play-circle" color="#fff" size={24} />
-        </TouchableOpacity>
       </View>
-    </View>
+      <TouchableOpacity>
+        {currentlyPlayed.url != external_url ? (
+          <FontAwesome
+            onPress={handlePlaySound}
+            name="play-circle"
+            color="#4169E1"
+            size={34}
+          />
+        ) : (
+          <FontAwesome
+            onPress={pauseSound}
+            name="pause-circle"
+            color="#4169E1"
+            size={34}
+          />
+        )}
+      </TouchableOpacity>
+    </Pressable>
   );
 };
 

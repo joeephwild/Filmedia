@@ -1,8 +1,8 @@
 import { View, Text, Image } from "react-native";
 import React, { useEffect, useState } from "react";
 import { Link } from "expo-router";
-import useGetArtist from "../../constants/hooks/useGetArtist";
-import { artistFTAddress } from "../../constants/addresses";
+// import useGetArtist from "../../constants/hooks/useGetArtist";
+// import { artistFTAddress } from "../../constants/addresses";
 
 type Props = {
   name: string;
@@ -30,7 +30,7 @@ const ArtistCard = ({ name, description, image , owner}: Props) => {
           />
           <View>
             <Text className="text-[14px] text-[#fff] font-bold">{name}</Text>
-            <Text className="text-[10px] text-[#808080] font-bold">
+            <Text className="text-[10px] w-[50%] text-[#808080] font-bold">
               {description}
             </Text>
           </View>

@@ -61,7 +61,7 @@ import { SafeAreaView } from "react-native-safe-area-context";
           contentContainerStyle={{
             paddingHorizontal: 15,
             paddingVertical: 20,
-            marginBottom: 1190,
+            marginBottom: 190,
           }}
           style={{
             marginBottom: 100,

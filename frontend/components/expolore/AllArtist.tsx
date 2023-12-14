@@ -10,54 +10,16 @@ import { _getAllArtist } from "../../constants/_helperFunctions";
 import { artistsArr } from "../../utils";
 
 const AllArtist = () => {
-  const songs = [
-    {
-      name: "Song 1",
-      image: "https://example.com/song1_image.jpg",
-      title: "First Melody",
-      artist: "Artist A",
-    },
-    {
-      name: "Song 2",
-      image: "https://example.com/song2_image.jpg",
-      title: "Groovy Beats",
-      artist: "Artist B",
-    },
-    {
-      name: "Song 3",
-      image: "https://example.com/song3_image.jpg",
-      title: "Serenade in D",
-      artist: "Artist C",
-    },
-    {
-      name: "Song 4",
-      image: "https://example.com/song4_image.jpg",
-      title: "Epic Symphony",
-      artist: "Artist D",
-    },
-    {
-      name: "Song 5",
-      image: "https://example.com/song5_image.jpg",
-      title: "Jazz Fusion",
-      artist: "Artist E",
-    },
-    {
-      name: "Song 5",
-      image: "https://example.com/song5_image.jpg",
-      title: "Jazz Fusion",
-      artist: "Artist E",
-    },
-  ];
   const [artists, setArtist] = useState([]);
 
-  useEffect(() => {
-    const getAllArtist = async () => {
-      const artistsall = await _getAllArtist();
-      console.log(artistsall, "sssssssss");
-      setArtist(artistsall);
-    };
-    // getAllArtist();
-  }, []);
+  // useEffect(() => {
+  //   const getAllArtist = async () => {
+  //     const artistsall = await _getAllArtist();
+  //     console.log(artistsall, "sssssssss");
+  //     setArtist(artistsall);
+  //   };
+  //   // getAllArtist();
+  // }, []);
 
   // const artistsArr = [
   //   {

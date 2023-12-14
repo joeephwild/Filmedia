@@ -1,10 +1,12 @@
 import FontAwesome from "@expo/vector-icons/FontAwesome";
 import { Link, Tabs } from "expo-router";
-import { Pressable, useColorScheme } from "react-native";
+import { Pressable, View, useColorScheme } from "react-native";
 
 import Colors from "../../constants/Colors";
 import React from "react";
 import { FontAwesome5 } from "@expo/vector-icons";
+import { useAuth } from "../../context/AuthContext";
+import MusicPlayer from "../../components/MusicPlayer";
 
 function TabBarIcon(props: {
   name: React.ComponentProps<typeof FontAwesome>["name"];
@@ -15,69 +17,78 @@ function TabBarIcon(props: {
 
 export default function TabLayout() {
   const colorScheme = useColorScheme();
-
+  const { playerOpen, currentlyPlayed } = useAuth();
   return (
-    <Tabs
-      screenOptions={{
-        tabBarActiveTintColor: "#F0F0F0",
-        headerShown: false,
-        tabBarStyle: {
-          backgroundColor: "#1B1212",
-          // borderTopColor: "transparent",
-        },
-      }}
-      sceneContainerStyle={{
-        backgroundColor: "#191414",
-      }}
-    >
-      <Tabs.Screen
-        name="index"
-        options={{
-          title: "Explore",
-          tabBarIcon: ({ color }) => (
-            <TabBarIcon name="compass" color={color} />
-          ),
+    <View style={{ flex: 1, flexDirection: "column-reverse" }}>
+      <Tabs
+        screenOptions={{
+          tabBarActiveTintColor: "#F0F0F0",
+          headerShown: false,
+          tabBarStyle: {
+            backgroundColor: "#1B1212",
+            // borderTopColor: "transparent",
+          },
         }}
-      />
-      <Tabs.Screen
-        name="two"
-        options={{
-          title: "Search",
-          tabBarIcon: ({ color }) => <TabBarIcon name="search" color={color} />,
+        sceneContainerStyle={{
+          backgroundColor: "#191414",
         }}
-      />
-      <Tabs.Screen
-        name="music"
-        options={{
-          title: "Music",
-          tabBarIcon: ({ color }) => <TabBarIcon name="music" color={color} />,
-        }}
-      />
-      <Tabs.Screen
-        name="videos"
-        options={{
-          title: "Videos",
-          tabBarIcon: ({ color }) => <TabBarIcon name="video" color={color} />,
-        }}
-      />
-      <Tabs.Screen
-        name="ticket"
-        options={{
-          title: "Ticket",
-          tabBarIcon: ({ color }) => (
-            <TabBarIcon name="ticket-alt" color={color} />
-          ),
-        }}
-      />
-      <Tabs.Screen
-        name="live"
-        options={{
-          title: "Live Event",
-          tabBarIcon: ({ color }) => (
-            <TabBarIcon name="broadcast-tower" color={color} />
-          ),
-        }}
-      />
-    </Tabs>
+      >
+        <Tabs.Screen
+          name="index"
+          options={{
+            title: "Explore",
+            tabBarIcon: ({ color }) => (
+              <TabBarIcon name="compass" color={color} />
+            ),
+          }}
+        />
+        <Tabs.Screen
+          name="two"
+          options={{
+            title: "Search",
+            tabBarIcon: ({ color }) => (
+              <TabBarIcon name="search" color={color} />
+            ),
+          }}
+        />
+        <Tabs.Screen
+          name="music"
+          options={{
+            title: "Music",
+            tabBarIcon: ({ color }) => (
+              <TabBarIcon name="music" color={color} />
+            ),
+          }}
+        />
+        <Tabs.Screen
+          name="videos"
+          options={{
+            title: "Videos",
+            tabBarIcon: ({ color }) => (
+              <TabBarIcon name="video" color={color} />
+            ),
+          }}
+        />
+        <Tabs.Screen
+          name="ticket"
+          options={{
+            title: "Ticket",
+            tabBarIcon: ({ color }) => (
+              <TabBarIcon name="ticket-alt" color={color} />
+            ),
+          }}
+        />
+        <Tabs.Screen
+          name="live"
+          options={{
+            title: "Live Event",
+            tabBarIcon: ({ color }) => (
+              <TabBarIcon name="broadcast-tower" color={color} />
+            ),
+          }}
+        />
+      </Tabs>
+       {playerOpen && <MusicPlayer currentlyplayed={currentlyPlayed} />}
+    </View>
   );
 }
