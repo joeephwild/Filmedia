@@ -5,10 +5,11 @@ import RangeComponents from "../../components/RangeComponents";
 import SongsCard from "../../components/cards/SongsCard";
 import { ScrollView } from "react-native-gesture-handler";
 import { SafeAreaView } from "react-native-safe-area-context";
+import { songs } from "../../utils";
 
 const StickyHeader = () => {
   return (
-    <SafeAreaView className="bg-black mt-2 flex-row items-center px-4 justify-between">
+    <SafeAreaView className="bg-transparent mt-2 flex-row items-center px-4 justify-between">
       <View className="flex-row items-center space-x-9">
         <FontAwesome name="music" size={30} color="blue" />
         <Text className="text-[26px] font-bold text-[#fff]">Playlist</Text>
@@ -23,39 +24,7 @@ const StickyHeader = () => {
 };
 
 const TopSongs = () => {
-  const songs = [
-    {
-      name: "Song 1",
-      image: "https://example.com/song1_image.jpg",
-      title: "First Melody",
-      artist: "Artist A",
-    },
-    {
-      name: "Song 2",
-      image: "https://example.com/song2_image.jpg",
-      title: "Groovy Beats",
-      artist: "Artist B",
-    },
-    {
-      name: "Song 3",
-      image: "https://example.com/song3_image.jpg",
-      title: "Serenade in D",
-      artist: "Artist C",
-    },
-    {
-      name: "Song 4",
-      image: "https://example.com/song4_image.jpg",
-      title: "Epic Symphony",
-      artist: "Artist D",
-    },
-    {
-      name: "Song 5",
-      image: "https://example.com/song5_image.jpg",
-      title: "Jazz Fusion",
-      artist: "Artist E",
-    },
-  ];
-
+  
   return (
     <View className="flex-1 min-h-screen">
       <View>
