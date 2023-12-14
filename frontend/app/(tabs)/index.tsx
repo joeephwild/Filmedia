@@ -1,32 +1,44 @@
-import { StyleSheet } from 'react-native';
-
-import EditScreenInfo from '../../components/EditScreenInfo';
-import { Text, View } from '../../components/Themed';
-import React from 'react';
+import { Image, StyleSheet, Text, TextInput, View } from "react-native";
+import React from "react";
+import { ScrollView } from "react-native-gesture-handler";
+import { SafeAreaView } from "react-native-safe-area-context";
+import { FontAwesome5 } from "@expo/vector-icons";
+import CarouselCompoent from "../../components/Carousel";
 
 export default function TabOneScreen() {
   return (
-    <View style={styles.container}>
-      <Text className='text-[30px]'>Tab One</Text>
-      <View style={styles.separator} lightColor="#eee" darkColor="rgba(255,255,255,0.1)" />
-      <EditScreenInfo path="app/(tabs)/index.tsx" />
-    </View>
+    <ScrollView style={{ flex: 1 }}>
+      {/** header view */}
+      <SafeAreaView>
+        <View>
+          <View className="flex-row items-center p-3 justify-between">
+            <View className="flex-row items-start space-x-4">
+              <Image
+                source={require("../../assets/images/profile.jpg")}
+                className="w-[50px] g-[50px] rounded-full object-contain"
+              />
+              <View>
+                <Text className="text-[18px] font-semibold text-[#fff]">
+                  Sarwar Jahan
+                </Text>
+                <Text className="text-[14px] text-[#DEDEDE] font-medium">
+                  Gold Member
+                </Text>
+              </View>
+            </View>
+            <FontAwesome5 name="bell" color="#fff" size={20} />
+          </View>
+          <View className="flex-row items-center p-3 justify-between">
+            <Text className="text-[26px] font-semibold text-[#fff] w-[50%]">Listen The Latest Musics</Text>
+            <View className="bg-transparent border border-[#fff] flex-row items-center space-x-3 w-[50%] p-3 rounded-[40px]">
+            <FontAwesome5 name="search" color="#fff" size={10}  />
+              <TextInput placeholder="Search" placeholderTextColor="#fff" className="w-fit text-[#fff]" />
+            </View>
+          </View>
+        </View>
+
+        {/* <CarouselCompoent /> */}
+      </SafeAreaView>
+    </ScrollView>
   );
 }
-
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    alignItems: 'center',
-    justifyContent: 'center',
-  },
-  title: {
-    fontSize: 20,
-    fontWeight: 'bold',
-  },
-  separator: {
-    marginVertical: 30,
-    height: 1,
-    width: '80%',
-  },
-});

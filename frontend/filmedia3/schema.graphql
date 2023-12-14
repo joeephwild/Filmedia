@@ -1,0 +1,40 @@
+type ArtistAddedNFTs @entity(immutable: true) {
+  id: Bytes!
+  artist: Bytes! # address
+  nfts: [String!]! # string[3]
+  chainid: BigInt! # uint256
+  blockNumber: BigInt!
+  blockTimestamp: BigInt!
+  transactionHash: Bytes!
+}
+
+type CanceledSubcription @entity(immutable: true) {
+  id: Bytes!
+  subcriber: Bytes! # address
+  artist: Bytes! # address
+  chainid: BigInt! # uint256
+  blockNumber: BigInt!
+  blockTimestamp: BigInt!
+  transactionHash: Bytes!
+}
+
+type ListedMusicNFT @entity(immutable: true) {
+  id: Bytes!
+  nft: Bytes! # address
+  tokenId: BigInt! # uint256
+  artist: Bytes! # address
+  chainid: BigInt! # uint256
+  blockNumber: BigInt!
+  blockTimestamp: BigInt!
+  transactionHash: Bytes!
+}
+
+type SubcribedToArtist @entity(immutable: true) {
+  id: Bytes!
+  subcriber: Bytes! # address
+  artist: Bytes! # address
+  chainid: BigInt! # uint256
+  blockNumber: BigInt!
+  blockTimestamp: BigInt!
+  transactionHash: Bytes!
+}

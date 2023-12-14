@@ -1,0 +1,769 @@
+[
+  {
+    "inputs": [],
+    "stateMutability": "nonpayable",
+    "type": "constructor"
+  },
+  {
+    "anonymous": false,
+    "inputs": [
+      {
+        "indexed": true,
+        "internalType": "uint256",
+        "name": "artist",
+        "type": "uint256"
+      },
+      {
+        "indexed": true,
+        "internalType": "string[3]",
+        "name": "nfts",
+        "type": "string[3]"
+      },
+      {
+        "indexed": false,
+        "internalType": "uint256",
+        "name": "chainid",
+        "type": "uint256"
+      }
+    ],
+    "name": "ArtistAddedNFTs",
+    "type": "event"
+  },
+  {
+    "anonymous": false,
+    "inputs": [
+      {
+        "indexed": true,
+        "internalType": "uint256",
+        "name": "subcriber",
+        "type": "uint256"
+      },
+      {
+        "indexed": true,
+        "internalType": "uint256",
+        "name": "artist",
+        "type": "uint256"
+      },
+      {
+        "indexed": false,
+        "internalType": "uint256",
+        "name": "chainid",
+        "type": "uint256"
+      }
+    ],
+    "name": "CanceledSubcription",
+    "type": "event"
+  },
+  {
+    "anonymous": false,
+    "inputs": [
+      {
+        "indexed": true,
+        "internalType": "address",
+        "name": "nft",
+        "type": "address"
+      },
+      {
+        "indexed": true,
+        "internalType": "uint256",
+        "name": "artistTokenId",
+        "type": "uint256"
+      },
+      {
+        "indexed": true,
+        "internalType": "address",
+        "name": "artist",
+        "type": "address"
+      },
+      {
+        "indexed": false,
+        "internalType": "uint256",
+        "name": "chainid",
+        "type": "uint256"
+      }
+    ],
+    "name": "CreatedArtistNFT",
+    "type": "event"
+  },
+  {
+    "anonymous": false,
+    "inputs": [
+      {
+        "indexed": true,
+        "internalType": "address",
+        "name": "nft",
+        "type": "address"
+      },
+      {
+        "indexed": true,
+        "internalType": "uint256",
+        "name": "userTokenId",
+        "type": "uint256"
+      },
+      {
+        "indexed": true,
+        "internalType": "address",
+        "name": "user",
+        "type": "address"
+      },
+      {
+        "indexed": false,
+        "internalType": "uint256",
+        "name": "chainid",
+        "type": "uint256"
+      }
+    ],
+    "name": "CreatedUserNFT",
+    "type": "event"
+  },
+  {
+    "anonymous": false,
+    "inputs": [
+      {
+        "indexed": true,
+        "internalType": "address",
+        "name": "nft",
+        "type": "address"
+      },
+      {
+        "indexed": true,
+        "internalType": "uint256",
+        "name": "tokenId",
+        "type": "uint256"
+      },
+      {
+        "indexed": false,
+        "internalType": "uint256",
+        "name": "artistTokenId",
+        "type": "uint256"
+      },
+      {
+        "indexed": true,
+        "internalType": "address",
+        "name": "artist",
+        "type": "address"
+      },
+      {
+        "indexed": false,
+        "internalType": "uint256",
+        "name": "chainid",
+        "type": "uint256"
+      }
+    ],
+    "name": "ListedMusicNFT",
+    "type": "event"
+  },
+  {
+    "anonymous": false,
+    "inputs": [
+      {
+        "indexed": true,
+        "internalType": "address",
+        "name": "subcriber",
+        "type": "address"
+      },
+      {
+        "indexed": true,
+        "internalType": "uint256",
+        "name": "artist",
+        "type": "uint256"
+      },
+      {
+        "indexed": false,
+        "internalType": "uint256",
+        "name": "chainid",
+        "type": "uint256"
+      }
+    ],
+    "name": "SubcribedToArtist",
+    "type": "event"
+  },
+  {
+    "stateMutability": "payable",
+    "type": "fallback"
+  },
+  {
+    "inputs": [
+      {
+        "internalType": "uint256",
+        "name": "user",
+        "type": "uint256"
+      },
+      {
+        "internalType": "uint256",
+        "name": "artist",
+        "type": "uint256"
+      }
+    ],
+    "name": "_tokenId",
+    "outputs": [
+      {
+        "internalType": "uint256",
+        "name": "",
+        "type": "uint256"
+      }
+    ],
+    "stateMutability": "view",
+    "type": "function"
+  },
+  {
+    "inputs": [
+      {
+        "internalType": "uint256",
+        "name": "_artistTokenId",
+        "type": "uint256"
+      },
+      {
+        "internalType": "string[3]",
+        "name": "nfts",
+        "type": "string[3]"
+      }
+    ],
+    "name": "addNFTForArtist",
+    "outputs": [],
+    "stateMutability": "nonpayable",
+    "type": "function"
+  },
+  {
+    "inputs": [
+      {
+        "internalType": "uint256",
+        "name": "_artistTokenId",
+        "type": "uint256"
+      },
+      {
+        "internalType": "uint256",
+        "name": "_userTokenId",
+        "type": "uint256"
+      }
+    ],
+    "name": "cancelSubcribtion",
+    "outputs": [],
+    "stateMutability": "nonpayable",
+    "type": "function"
+  },
+  {
+    "inputs": [
+      {
+        "internalType": "uint256",
+        "name": "subcriberTokenId",
+        "type": "uint256"
+      },
+      {
+        "internalType": "uint256",
+        "name": "artistTokenId",
+        "type": "uint256"
+      }
+    ],
+    "name": "checkIfUserIsSubcribed",
+    "outputs": [
+      {
+        "internalType": "bool",
+        "name": "_isSubcribedBool",
+        "type": "bool"
+      }
+    ],
+    "stateMutability": "view",
+    "type": "function"
+  },
+  {
+    "inputs": [
+      {
+        "internalType": "address",
+        "name": "_nft",
+        "type": "address"
+      },
+      {
+        "internalType": "uint256",
+        "name": "tokenId",
+        "type": "uint256"
+      }
+    ],
+    "name": "createArtist",
+    "outputs": [],
+    "stateMutability": "nonpayable",
+    "type": "function"
+  },
+  {
+    "inputs": [
+      {
+        "internalType": "address",
+        "name": "_nft",
+        "type": "address"
+      },
+      {
+        "internalType": "uint256",
+        "name": "userTokenId",
+        "type": "uint256"
+      }
+    ],
+    "name": "createUser",
+    "outputs": [],
+    "stateMutability": "nonpayable",
+    "type": "function"
+  },
+  {
+    "inputs": [],
+    "name": "getAllArtists",
+    "outputs": [
+      {
+        "internalType": "uint256[]",
+        "name": "",
+        "type": "uint256[]"
+      }
+    ],
+    "stateMutability": "view",
+    "type": "function"
+  },
+  {
+    "inputs": [
+      {
+        "internalType": "uint256",
+        "name": "subcriberTokenId",
+        "type": "uint256"
+      },
+      {
+        "internalType": "uint256",
+        "name": "artistTokenId",
+        "type": "uint256"
+      }
+    ],
+    "name": "getAnalytics",
+    "outputs": [
+      {
+        "components": [
+          {
+            "internalType": "uint256",
+            "name": "lastPaymentTimestamp",
+            "type": "uint256"
+          },
+          {
+            "internalType": "bool",
+            "name": "currentlySubcribed",
+            "type": "bool"
+          },
+          {
+            "internalType": "uint256",
+            "name": "artist",
+            "type": "uint256"
+          },
+          {
+            "internalType": "uint256",
+            "name": "subcriberTokenId",
+            "type": "uint256"
+          },
+          {
+            "internalType": "uint256",
+            "name": "subcribedDate",
+            "type": "uint256"
+          }
+        ],
+        "internalType": "struct IStructs.SubriberAnalytics",
+        "name": "",
+        "type": "tuple"
+      }
+    ],
+    "stateMutability": "view",
+    "type": "function"
+  },
+  {
+    "inputs": [
+      {
+        "internalType": "uint256",
+        "name": "_artistTokenId",
+        "type": "uint256"
+      }
+    ],
+    "name": "getArtist",
+    "outputs": [
+      {
+        "components": [
+          {
+            "internalType": "address",
+            "name": "artistAddress",
+            "type": "address"
+          },
+          {
+            "internalType": "uint256[]",
+            "name": "tokenIds",
+            "type": "uint256[]"
+          },
+          {
+            "internalType": "address[]",
+            "name": "allSubcribers",
+            "type": "address[]"
+          },
+          {
+            "internalType": "string[]",
+            "name": "nfts",
+            "type": "string[]"
+          },
+          {
+            "internalType": "uint256",
+            "name": "balance",
+            "type": "uint256"
+          }
+        ],
+        "internalType": "struct IStructs.Artist",
+        "name": "",
+        "type": "tuple"
+      }
+    ],
+    "stateMutability": "view",
+    "type": "function"
+  },
+  {
+    "inputs": [
+      {
+        "internalType": "uint256",
+        "name": "tokenId",
+        "type": "uint256"
+      }
+    ],
+    "name": "getMusic",
+    "outputs": [
+      {
+        "components": [
+          {
+            "internalType": "address",
+            "name": "nft",
+            "type": "address"
+          },
+          {
+            "internalType": "uint256",
+            "name": "tokenId",
+            "type": "uint256"
+          },
+          {
+            "internalType": "uint256",
+            "name": "streams",
+            "type": "uint256"
+          },
+          {
+            "internalType": "uint256",
+            "name": "artistTokenId",
+            "type": "uint256"
+          }
+        ],
+        "internalType": "struct FilMediaMarketplace.Music",
+        "name": "",
+        "type": "tuple"
+      }
+    ],
+    "stateMutability": "view",
+    "type": "function"
+  },
+  {
+    "inputs": [
+      {
+        "internalType": "uint256",
+        "name": "tokenId",
+        "type": "uint256"
+      },
+      {
+        "internalType": "uint256",
+        "name": "_artistTokenId",
+        "type": "uint256"
+      }
+    ],
+    "name": "getMusicNFT",
+    "outputs": [
+      {
+        "components": [
+          {
+            "internalType": "address",
+            "name": "nft",
+            "type": "address"
+          },
+          {
+            "internalType": "uint256",
+            "name": "tokenId",
+            "type": "uint256"
+          },
+          {
+            "internalType": "uint256",
+            "name": "artistTokenId",
+            "type": "uint256"
+          }
+        ],
+        "internalType": "struct FilMediaMarketplace.ListMusicNFT",
+        "name": "",
+        "type": "tuple"
+      }
+    ],
+    "stateMutability": "view",
+    "type": "function"
+  },
+  {
+    "inputs": [],
+    "name": "getSubcribers",
+    "outputs": [
+      {
+        "components": [
+          {
+            "internalType": "uint256",
+            "name": "lastPaymentTimestamp",
+            "type": "uint256"
+          },
+          {
+            "internalType": "bool",
+            "name": "currentlySubcribed",
+            "type": "bool"
+          },
+          {
+            "internalType": "uint256",
+            "name": "artist",
+            "type": "uint256"
+          },
+          {
+            "internalType": "uint256",
+            "name": "subcriberTokenId",
+            "type": "uint256"
+          },
+          {
+            "internalType": "uint256",
+            "name": "subcribedDate",
+            "type": "uint256"
+          }
+        ],
+        "internalType": "struct IStructs.SubriberAnalytics[]",
+        "name": "",
+        "type": "tuple[]"
+      }
+    ],
+    "stateMutability": "view",
+    "type": "function"
+  },
+  {
+    "inputs": [
+      {
+        "internalType": "uint256",
+        "name": "subcriberTokenId",
+        "type": "uint256"
+      },
+      {
+        "internalType": "uint256",
+        "name": "artistTokenId",
+        "type": "uint256"
+      }
+    ],
+    "name": "getTokenId",
+    "outputs": [
+      {
+        "internalType": "uint256",
+        "name": "",
+        "type": "uint256"
+      }
+    ],
+    "stateMutability": "view",
+    "type": "function"
+  },
+  {
+    "inputs": [
+      {
+        "internalType": "uint256",
+        "name": "_userTokenId",
+        "type": "uint256"
+      }
+    ],
+    "name": "getUser",
+    "outputs": [
+      {
+        "components": [
+          {
+            "internalType": "address",
+            "name": "userAddress",
+            "type": "address"
+          },
+          {
+            "internalType": "uint256[]",
+            "name": "subcribeToTokenId",
+            "type": "uint256[]"
+          }
+        ],
+        "internalType": "struct FilMediaMarketplace.User",
+        "name": "",
+        "type": "tuple"
+      }
+    ],
+    "stateMutability": "view",
+    "type": "function"
+  },
+  {
+    "inputs": [
+      {
+        "internalType": "uint256",
+        "name": "artistId",
+        "type": "uint256"
+      }
+    ],
+    "name": "getUserBalance",
+    "outputs": [
+      {
+        "internalType": "uint256",
+        "name": "",
+        "type": "uint256"
+      }
+    ],
+    "stateMutability": "view",
+    "type": "function"
+  },
+  {
+    "inputs": [
+      {
+        "internalType": "uint256",
+        "name": "user",
+        "type": "uint256"
+      },
+      {
+        "internalType": "uint256",
+        "name": "artist",
+        "type": "uint256"
+      }
+    ],
+    "name": "isSubscribed",
+    "outputs": [
+      {
+        "internalType": "bool",
+        "name": "",
+        "type": "bool"
+      }
+    ],
+    "stateMutability": "view",
+    "type": "function"
+  },
+  {
+    "inputs": [
+      {
+        "internalType": "uint256",
+        "name": "artistTokenId",
+        "type": "uint256"
+      }
+    ],
+    "name": "isWalletAnArtist",
+    "outputs": [
+      {
+        "internalType": "bool",
+        "name": "",
+        "type": "bool"
+      }
+    ],
+    "stateMutability": "view",
+    "type": "function"
+  },
+  {
+    "inputs": [],
+    "name": "lastTimeStamp",
+    "outputs": [
+      {
+        "internalType": "uint256",
+        "name": "",
+        "type": "uint256"
+      }
+    ],
+    "stateMutability": "view",
+    "type": "function"
+  },
+  {
+    "inputs": [
+      {
+        "internalType": "address",
+        "name": "_nft",
+        "type": "address"
+      },
+      {
+        "internalType": "uint256",
+        "name": "tokenId",
+        "type": "uint256"
+      },
+      {
+        "internalType": "uint256",
+        "name": "artistTokenId",
+        "type": "uint256"
+      }
+    ],
+    "name": "listNFT",
+    "outputs": [],
+    "stateMutability": "nonpayable",
+    "type": "function"
+  },
+  {
+    "inputs": [
+      {
+        "internalType": "uint256",
+        "name": "year",
+        "type": "uint256"
+      },
+      {
+        "internalType": "uint256",
+        "name": "user",
+        "type": "uint256"
+      },
+      {
+        "internalType": "uint256",
+        "name": "artist",
+        "type": "uint256"
+      }
+    ],
+    "name": "monthlySubcriptionBool",
+    "outputs": [
+      {
+        "internalType": "bool",
+        "name": "",
+        "type": "bool"
+      }
+    ],
+    "stateMutability": "view",
+    "type": "function"
+  },
+  {
+    "inputs": [
+      {
+        "internalType": "uint256",
+        "name": "subcriberTokenId",
+        "type": "uint256"
+      },
+      {
+        "internalType": "uint256",
+        "name": "artistTokenId",
+        "type": "uint256"
+      },
+      {
+        "internalType": "uint256",
+        "name": "tokenId",
+        "type": "uint256"
+      },
+      {
+        "internalType": "address",
+        "name": "_nftAddress",
+        "type": "address"
+      }
+    ],
+    "name": "setTokenId",
+    "outputs": [],
+    "stateMutability": "nonpayable",
+    "type": "function"
+  },
+  {
+    "inputs": [
+      {
+        "internalType": "uint256",
+        "name": "_artistTokenId",
+        "type": "uint256"
+      },
+      {
+        "internalType": "uint256",
+        "name": "_userTokenId",
+        "type": "uint256"
+      }
+    ],
+    "name": "subcribeToArtist",
+    "outputs": [],
+    "stateMutability": "payable",
+    "type": "function"
+  },
+  {
+    "stateMutability": "payable",
+    "type": "receive"
+  }
+]
