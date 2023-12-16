@@ -10,7 +10,6 @@ import React from "react";
 import { ScrollView } from "react-native-gesture-handler";
 import { SafeAreaView } from "react-native-safe-area-context";
 import { FontAwesome5 } from "@expo/vector-icons";
-import CarouselCompoent from "../../components/Carousel";
 import AllSongs from "../../components/expolore/AllSongs";
 import AllAlbums from "../../components/expolore/AllAlbums";
 import AllArtist from "../../components/expolore/AllArtist";

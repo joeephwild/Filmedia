@@ -42,7 +42,7 @@ export default function Create() {
           flex: 1,
           alignItems: "flex-end",
           position: "absolute",
-          bottom: 90,
+          bottom: 60,
           right: 0,
         }}
       >
@@ -53,7 +53,7 @@ export default function Create() {
           }}
           horizontal
         >
-          <View className="w-fit p-5 bg-black space-x-9 mb-7 flex-row">
+          <View className="w-fit p-5 bg-black/80 space-x-9 mb-7 flex-row">
             {steps.map((item, index) => (
               <Pressable onPress={() => setActive(item)}>
                 <Text

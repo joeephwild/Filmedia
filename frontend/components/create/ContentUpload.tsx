@@ -11,7 +11,7 @@ import * as MediaLibrary from "expo-media-library";
 import { SafeAreaView } from "react-native-safe-area-context";
 import { ResizeMode, Video } from "expo-av";
 import * as FileSystem from "expo-file-system";
-// import { uploadToNFTStorage } from "../../nftstorage";
+import { uploadToNFTStorage } from "../../nftStorage"
 
 const ContentUpload = () => {
   const [images, setImages] = useState<MediaLibrary.Asset[]>();
