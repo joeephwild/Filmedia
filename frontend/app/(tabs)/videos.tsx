@@ -99,7 +99,9 @@ import { SafeAreaView } from "react-native-safe-area-context";
                       uri: "https://d23dyxeqlo5psv.cloudfront.net/big_buck_bunny.mp4",
                     }}
                     // useNativeControls
-  
+                    videoStyle={{
+                      width: 400
+                    }}
                     resizeMode={ResizeMode.CONTAIN}
                     isLooping
                     onPlaybackStatusUpdate={(status) => setStatus(() => status)}

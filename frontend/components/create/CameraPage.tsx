@@ -51,17 +51,19 @@ const CameraPage = ({ setActiveUrl, activeUrl }: Props) => {
       aspect: [4, 3],
       quality: 1,
     });
-  
+
     if (!result.canceled && result.assets[0].duration) {
       if (result.assets[0].duration > 15000) {
         alert("Please select a video that is not more than 15 seconds long.");
       } else {
         // The video is not more than 15 seconds long, you can use it here.
         console.log(result.assets[0].uri);
-        setActiveUrl(result.assets[0].uri)
-  
+        setActiveUrl(result.assets[0].uri);
+
         // Convert the uri to a File object and upload it
-        const file = new File([result.assets[0].uri], "video.mp4", { type: "video/mp4" });
+        const file = new File([result.assets[0].uri], "video.mp4", {
+          type: "video/mp4",
+        });
         await uploadFileToPinata(file);
       }
     }
@@ -114,7 +116,7 @@ const CameraPage = ({ setActiveUrl, activeUrl }: Props) => {
           source={{
             uri: activeUrl,
           }}
-          resizeMode={ResizeMode.CONTAIN}
+          resizeMode={ResizeMode.COVER}
           isMuted={false}
           rate={1.0}
           useNativeControls
@@ -122,7 +124,7 @@ const CameraPage = ({ setActiveUrl, activeUrl }: Props) => {
           shouldPlay
           style={{
             minHeight: "100%",
-            width: 400
+            width: 400,
           }}
         />
       </>

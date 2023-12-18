@@ -20,7 +20,7 @@ import ImageUpload from "../components/create/ImageUpload";
 export default function Create() {
   const [active, setActive] = useState("Shorts");
   const [activeUrl, setActiveUrl] = useState<string | undefined>("");
-  const steps = ["Shorts", "Video", "Image", "Live"];
+  const steps = ["Shorts", "Video", "Image", "Live", "Podcast"];
   console.log(activeUrl);
 
   const handleDisplay = () => {
@@ -54,8 +54,9 @@ export default function Create() {
             alignItems: "flex-end",
           }}
           horizontal
+          showsHorizontalScrollIndicator={false}
         >
-          <View className="w-fit p-5 bg-black/80 space-x-9 mb-7 flex-row">
+          <View className="w-fit p-5 bg-black/80 space-x-9 mb-7 flex-row ml-[120px]">
             {steps.map((item, index) => (
               <Pressable onPress={() => setActive(item)}>
                 <Text

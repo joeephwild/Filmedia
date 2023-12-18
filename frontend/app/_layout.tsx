@@ -9,7 +9,6 @@ import { SplashScreen, Stack } from "expo-router";
 import React, { useEffect } from "react";
 import { View, useColorScheme } from "react-native";
 import { AuthProvider, useAuth } from "../context/AuthContext";
-import MusicPlayer from "../components/MusicPlayer";
 
 export {
   // Catch any errors thrown by the Layout component.
@@ -18,7 +17,7 @@ export {
 
 export const unstable_settings = {
   // Ensure that reloading on `/modal` keeps a back button present.
-  initialRouteName: "(tabs)",
+  initialRouteName: "index",
 };
 
 // Prevent the splash screen from auto-hiding before asset loading is complete.
@@ -26,7 +25,10 @@ SplashScreen.preventAutoHideAsync();
 
 export default function RootLayout() {
   const [loaded, error] = useFonts({
-    SpaceMono: require("../assets/fonts/NunitoSans_7pt-Regular.ttf"),
+    Nunito: require("../assets/fonts/NunitoSans_10pt_Expanded-Black.ttf"),
+    OpensansRegular: require("../assets/fonts/OpenSans-Regular.ttf"),
+    OpensansBold: require("../assets/fonts/OpenSans-Bold.ttf"),
+    OpensansLight: require("../assets/fonts/OpenSans-Light.ttf"),
     ...FontAwesome.font,
   });
 
@@ -60,10 +62,14 @@ function RootLayoutNav() {
           },
         }}
       >
+        <Stack.Screen name="index" options={{ headerShown: false }} />
         <Stack.Screen name="(tabs)" options={{ headerShown: false }} />
         <Stack.Screen name="modal" options={{ presentation: "modal" }} />
         <Stack.Screen name="profile" options={{ headerShown: false }} />
-        <Stack.Screen name="artist/[profile]" options={{ headerShown: false }} />
+        <Stack.Screen
+          name="artist/[profile]"
+          options={{ headerShown: false }}
+        />
         <Stack.Screen name="vid/[title]" options={{ headerShown: false }} />
         <Stack.Screen name="create" options={{ headerShown: false }} />
       </Stack>

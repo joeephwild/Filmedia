@@ -223,11 +223,11 @@ export function AuthProvider({ children }: AuthProviderProps) {
 
   useEffect(() => {
     const retrieveAccount = async () => {
-      const account = await getAccount();
-      setSession(account);
-      if (session) {
-        router.push("/(tabs)");
-      }
+      // const account = await getAccount();
+      // setSession(account);
+      // if (session) {
+      //   router.push("/(tabs)");
+      // }
     };
     retrieveAccount();
   }, [session]);

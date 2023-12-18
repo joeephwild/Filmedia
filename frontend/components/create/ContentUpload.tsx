@@ -12,63 +12,60 @@ import { SafeAreaView } from "react-native-safe-area-context";
 import { ResizeMode, Video } from "expo-av";
 import * as FileSystem from "expo-file-system";
 // import { uploadToNFTStorage } from "../../nftStorage"
+import { uploadFileToPinata } from "../../nftStorage";
 
 const ContentUpload = () => {
   const [images, setImages] = useState<MediaLibrary.Asset[]>();
   const [selectedVideos, setSelectedVideos] = useState<string | null>(null);
+  const [isAudioEnabled, setIsAudioEnabled] = useState(true);
+
+  useEffect(() => {
+    if (!isAudioEnabled) {
+      Alert.alert("Audio is disabled", "Would you like to enable audio?", [
+        {
+          text: "No",
+          onPress: () => console.log("No Pressed"),
+          style: "cancel",
+        },
+        { text: "Yes", onPress: () => setIsAudioEnabled(true) },
+      ]);
+    }
+  }, [isAudioEnabled]);
 
   // ...
+
+  const videoRef = React.useRef<Video>(null);
+
+  // ...
+
+  useEffect(() => {
+    if (videoRef.current && selectedVideos) {
+      videoRef.current.loadAsync({ uri: selectedVideos });
+    }
+  }, [selectedVideos]);
 
   const uploadVideo = async (assetId: string) => {
     const asset = await MediaLibrary.getAssetInfoAsync(assetId);
     if (!asset.localUri) {
       throw new Error("Asset localUri is undefined");
     }
-    const videoFile = await FileSystem.readAsStringAsync(asset.localUri, {
-      encoding: FileSystem.EncodingType.Base64,
-    });
-    const videoData = `data:video/mp4;base64,${videoFile}`;
+
+    // Fetch the file from the local file system as a Blob
+    const response = await fetch(asset.localUri);
+    const blob = await response.blob();
 
     // Create a new File object
-    const file = new File([videoData], "video.mp4", { type: "video/mp4" });
+    const file = new File([asset.localUri], "video.mp4", { type: "video/mp4" });
+    console.log(asset.localUri);
+    setSelectedVideos(asset.localUri);
 
-    // Upload the video to NFTStorage
-    // const videoUrl = await uploadToNFTStorage(file);
-    // console.log(videoUrl);
+    // // Upload the video to NFTStorage
+    // const videoUrl = await uploadFileToPinata(file);
+    // const res = `https://gateway.pinata.cloud/ipfs/${videoUrl}`;
+    // console.log(res);
 
     // return videoUrl;
   };
-
-  // const uploadVideo = async (assetId) => {
-  //   const asset = await MediaLibrary.getAssetInfoAsync(assetId);
-  //   if (!asset.localUri) {
-  //     throw new Error("Asset localUri is undefined");
-  //   }
-  //   const videoFile = await FileSystem.readAsStringAsync(asset.localUri, {
-  //     encoding: FileSystem.EncodingType.Base64,
-  //   });
-  //   const videoData = `data:video/mp4;base64,${videoFile}`;
-
-  //   // Replace with your upload API endpoint
-  //   const uploadUrl = "https://your-upload-api-endpoint";
-
-  //   const response = await fetch(uploadUrl, {
-  //     method: "POST",
-  //     body: JSON.stringify({ file: videoData }),
-  //     headers: {
-  //       "Content-Type": "application/json",
-  //     },
-  //   });
-
-  //   if (!response.ok) {
-  //     throw new Error("Upload failed");
-  //   }
-
-  //   const data = await response.json();
-
-  //   // The URL of the uploaded video
-  //   return data.url;
-  // };
 
   const getVideosFromLibrary = async () => {
     const { granted } = await MediaLibrary.requestPermissionsAsync();
@@ -77,9 +74,11 @@ const ContentUpload = () => {
         mediaType: "video",
       });
       setImages(assets);
-      // const res = await uploadVideo(assets[0].uri);
-      // console.log(res)
-      // setSelectedVideos(res || null);
+      const asset = await MediaLibrary.getAssetInfoAsync(assets[0].id);
+      if (!asset.localUri) {
+        throw new Error("Asset localUri is undefined");
+      }
+      setSelectedVideos(asset.localUri || null);
     } else {
       Alert.alert(
         "Permission needed",
@@ -96,12 +95,15 @@ const ContentUpload = () => {
       <SafeAreaView className=" h-[400px] items-center justify-center">
         {selectedVideos && (
           <Video
-            source={{ uri: selectedVideos }}
+            ref={videoRef}
+            source={{
+              uri: selectedVideos,
+            }}
+            useNativeControls
             resizeMode={ResizeMode.COVER}
-            isMuted={false}
-            rate={1.0}
+            isMuted={!isAudioEnabled} // Set this to false to allow sound
             isLooping
-            shouldPlay
+            shouldPlay={true}
             style={{
               width: 300,
               height: 360,
@@ -116,9 +118,7 @@ const ContentUpload = () => {
         renderItem={({ item }) => (
           <TouchableOpacity
             onPress={async () => {
-              // const videoUrl = await uploadVideo(item.id);
-              // console.log(videoUrl)
-              // setSelectedVideos(videoUrl);
+              const videoUrl = await uploadVideo(item.id);
             }}
             style={{ flex: 1, flexDirection: "column", margin: 1 }}
           >
@@ -128,8 +128,18 @@ const ContentUpload = () => {
                 justifyContent: "center",
                 alignItems: "center",
                 height: 100,
-              }} // adjust the width and height as needed
+              }}
             />
+            <Text
+              style={{
+                position: "absolute",
+                color: "white",
+                bottom: 0,
+                right: 0,
+              }}
+            >
+              {item.duration.toFixed(2)}
+            </Text>
           </TouchableOpacity>
         )}
       />
