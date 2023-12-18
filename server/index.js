@@ -9,6 +9,16 @@ const pinata = new pinataSDK(pinataApiKey, pinataApiSecret);
 
 const app = express();
 
+app.use(express.json());
+app.use(cors());
+app.use(bodyParser.json({ limit: "50mb" }));
+app.use(
+  bodyParser.urlencoded({
+    limit: "50mb",
+    extended: true,
+    parameterLimit: 50000,
+  })
+);
 async function storeNFTs(imagesPath) {
   const { metadata, image } = req.body;
 
