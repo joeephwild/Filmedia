@@ -11,7 +11,7 @@ import * as MediaLibrary from "expo-media-library";
 import { SafeAreaView } from "react-native-safe-area-context";
 import { ResizeMode, Video } from "expo-av";
 import * as FileSystem from "expo-file-system";
-import { uploadToNFTStorage } from "../../nftStorage"
+// import { uploadToNFTStorage } from "../../nftStorage"
 
 const ContentUpload = () => {
   const [images, setImages] = useState<MediaLibrary.Asset[]>();
@@ -78,6 +78,7 @@ const ContentUpload = () => {
       });
       setImages(assets);
       // const res = await uploadVideo(assets[0].uri);
+      // console.log(res)
       // setSelectedVideos(res || null);
     } else {
       Alert.alert(
@@ -115,7 +116,8 @@ const ContentUpload = () => {
         renderItem={({ item }) => (
           <TouchableOpacity
             onPress={async () => {
-              const videoUrl = await uploadVideo(item.id);
+              // const videoUrl = await uploadVideo(item.id);
+              // console.log(videoUrl)
               // setSelectedVideos(videoUrl);
             }}
             style={{ flex: 1, flexDirection: "column", margin: 1 }}

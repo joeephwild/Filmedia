@@ -18,16 +18,18 @@ import ContentUpload from "../components/create/ContentUpload";
 import ImageUpload from "../components/create/ImageUpload";
 
 export default function Create() {
-  const [active, setActive] = useState("Feed");
-  const steps = ["Feed", "Video", "Image", "Live"];
+  const [active, setActive] = useState("Shorts");
+  const [activeUrl, setActiveUrl] = useState<string | undefined>("");
+  const steps = ["Shorts", "Video", "Image", "Live"];
+  console.log(activeUrl);
 
   const handleDisplay = () => {
     switch (active) {
-      case "Feed":
-        return <CameraPage />;
+      case "Shorts":
+        return <CameraPage setActiveUrl={setActiveUrl} activeUrl={activeUrl} />;
       case "Video":
         return <ContentUpload />;
-        case "Image":
+      case "Image":
         return <ImageUpload />;
       default:
         break;
@@ -42,7 +44,7 @@ export default function Create() {
           flex: 1,
           alignItems: "flex-end",
           position: "absolute",
-          bottom: 60,
+          bottom: 90,
           right: 0,
         }}
       >
