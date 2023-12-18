@@ -53,7 +53,6 @@ function RootLayoutNav() {
 
   return (
     <AuthProvider>
-      {/* <View> */}
       <Stack
         screenOptions={{
           contentStyle: {
@@ -64,10 +63,10 @@ function RootLayoutNav() {
         <Stack.Screen name="(tabs)" options={{ headerShown: false }} />
         <Stack.Screen name="modal" options={{ presentation: "modal" }} />
         <Stack.Screen name="profile" options={{ headerShown: false }} />
-        <Stack.Screen name="artist" options={{ headerShown: false }} />
+        <Stack.Screen name="artist/[profile]" options={{ headerShown: false }} />
+        <Stack.Screen name="vid/[title]" options={{ headerShown: false }} />
+        <Stack.Screen name="create" options={{ headerShown: false }} />
       </Stack>
-      {/* {playerOpen && <MusicPlayer />} */}
-      {/* </View> */}
     </AuthProvider>
   );
 }

@@ -1,12 +1,19 @@
-import { Image, StyleSheet, Text, TextInput, View } from "react-native";
+import {
+  Image,
+  Pressable,
+  StyleSheet,
+  Text,
+  TextInput,
+  View,
+} from "react-native";
 import React from "react";
 import { ScrollView } from "react-native-gesture-handler";
 import { SafeAreaView } from "react-native-safe-area-context";
 import { FontAwesome5 } from "@expo/vector-icons";
-import CarouselCompoent from "../../components/Carousel";
 import AllSongs from "../../components/expolore/AllSongs";
 import AllAlbums from "../../components/expolore/AllAlbums";
 import AllArtist from "../../components/expolore/AllArtist";
+import { router } from "expo-router";
 
 export default function TabOneScreen() {
   return (
@@ -37,7 +44,12 @@ export default function TabOneScreen() {
                 </Text>
               </View>
             </View>
-            <FontAwesome5 name="bell" color="#fff" size={20} />
+            <View className="flex-row items-center space-x-5">
+              <FontAwesome5 name="bell" color="#fff" size={20} />
+              <Pressable onPress={() => router.push("/create")} className="">
+                <FontAwesome5 name="plus" color="#fff" size={20} />
+              </Pressable>
+            </View>
           </View>
           <View className="flex-row items-center p-3 justify-between">
             <Text className="text-[26px] font-semibold text-[#fff] w-[50%]">
