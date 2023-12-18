@@ -2,6 +2,7 @@ const fs = require("fs");
 const express = require("express");
 const cors = require("cors");
 const pinataSDK = require("@pinata/sdk");
+const bodyParser = require("body-parser");
 
 const pinataApiKey = `baa15a990fe2a6582396`;
 const pinataApiSecret = `7d07dbaf59f3eaed2768df29df1d59153792bc6e8c9d081b500beabad715f950`;
