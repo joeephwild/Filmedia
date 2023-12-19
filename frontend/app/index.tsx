@@ -1,6 +1,13 @@
 import { View, Text, ImageBackground, TouchableOpacity } from "react-native";
 import React, { useEffect, useState } from "react";
 import { SafeAreaView } from "react-native-safe-area-context";
+import { StatusBar } from "expo-status-bar";
+import {
+  GestureDetector,
+  PanGestureHandler,
+  Gesture,
+  Directions,
+} from "react-native-gesture-handler";
 
 const onBoradingSteps = [
   {
@@ -66,54 +73,81 @@ const Index = () => {
     }
   };
 
+  const handleBack = () => {
+    if (currentIndex === 0) {
+      handleSkip();
+    } else {
+      setCurrentIndex(currentIndex - 1);
+    }
+  };
+
   const handleSkip = () => {
     setCurrentIndex(2);
   };
 
+  const swipeForward = Gesture.Fling()
+    .direction(Directions.LEFT)
+    .onEnd((event) => {
+      handleNext();
+    });
+
+  const swipeBackward = Gesture.Fling()
+    .direction(Directions.RIGHT)
+    .onEnd((event) => {
+      handleBack();
+    });
+
+  const swipes = Gesture.Race(swipeForward, swipeBackward);
+
   return (
-    <View className="items-center justify-center flex-1">
-      <ImageBackground
-        source={{
-          uri: data.image,
-        }}
-        className="min-h-[600px] w-full items-end relative"
-      >
-        <TouchableOpacity
-          onPress={handleSkip}
-          className="bg-[#4169E1] rounded-[40px] py-[12px] px-[20px] mt-[80px] items-center justify-center"
+    <GestureDetector gesture={swipes}>
+      <View className="items-center justify-center flex-1">
+        <StatusBar style="auto" />
+        <ImageBackground
+          source={{
+            uri: data.image,
+          }}
+          className="min-h-[600px] w-full items-end relative"
         >
-          <Text className="text-[16px]  font-opensans-bold text-[#fff]">
-            Skip
+          <TouchableOpacity
+            onPress={handleSkip}
+            className="bg-[#4169E1] rounded-[40px] py-[12px] px-[20px] mt-[80px] items-center justify-center"
+          >
+            <Text className="text-[16px]  font-opensans-bold text-[#fff]">
+              Skip
+            </Text>
+          </TouchableOpacity>
+          <View className="flex-row items-center mb-9 space-x-2 absolute bottom-0 left-1/2 transform -translate-x-1/2">
+            {onBoradingSteps.map((_, index) => (
+              <View
+                key={index}
+                className={`h-2 rounded w-[20px] ${
+                  currentIndex === index
+                    ? "bg-blue-400"
+                    : "bg-white w-2 rounded-full"
+                }`}
+              />
+            ))}
+          </View>
+        </ImageBackground>
+        <View className="bg-white items-center w-full py-[16px] h-[300px]">
+          <Text className="text-[20px] font-opensans-bold px-[20px] text-black text-center font-bold">
+            {data.title}
           </Text>
-        </TouchableOpacity>
-        <View className="flex-row items-center mb-9 space-x-2 absolute bottom-0 left-1/2 transform -translate-x-1/2">
-          {onBoradingSteps.map((_, index) => (
-            <View
-              key={index}
-              className={`h-2 rounded w-[20px] ${
-                currentIndex === index ? "bg-blue-400" : "bg-white w-2 rounded-full"
-              }`}
-            />
-          ))}
+          <Text className="text-[14px] font-opensans-regular p-[20px] text-black text-center">
+            {data.description}
+          </Text>
+          <TouchableOpacity
+            onPress={handleNext}
+            className="bg-[#4169E1] rounded-[40px] py-[16px] mt-[30px] items-center justify-center w-[80%]"
+          >
+            <Text className="text-[16px]  font-opensans-bold text-[#fff]">
+              Get Started
+            </Text>
+          </TouchableOpacity>
         </View>
-      </ImageBackground>
-      <View className="bg-white items-center w-full py-[16px] h-[300px]">
-        <Text className="text-[20px] font-opensans-bold px-[20px] text-black text-center font-bold">
-          {data.title}
-        </Text>
-        <Text className="text-[14px] font-opensans-regular p-[20px] text-black text-center">
-          {data.description}
-        </Text>
-        <TouchableOpacity
-          onPress={handleNext}
-          className="bg-[#4169E1] rounded-[40px] py-[16px] mt-[30px] items-center justify-center w-[80%]"
-        >
-          <Text className="text-[16px]  font-opensans-bold text-[#fff]">
-            Get Started
-          </Text>
-        </TouchableOpacity>
       </View>
-    </View>
+    </GestureDetector>
   );
 };
 

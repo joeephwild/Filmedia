@@ -9,6 +9,8 @@ import { SplashScreen, Stack } from "expo-router";
 import React, { useEffect } from "react";
 import { View, useColorScheme } from "react-native";
 import { AuthProvider, useAuth } from "../context/AuthContext";
+import { GestureHandlerRootView } from "react-native-gesture-handler";
+import 'react-native-gesture-handler';
 
 export {
   // Catch any errors thrown by the Layout component.
@@ -54,25 +56,27 @@ function RootLayoutNav() {
   const colorScheme = useColorScheme();
 
   return (
-    <AuthProvider>
-      <Stack
-        screenOptions={{
-          contentStyle: {
-            backgroundColor: "#191414",
-          },
-        }}
-      >
-        <Stack.Screen name="index" options={{ headerShown: false }} />
-        <Stack.Screen name="(tabs)" options={{ headerShown: false }} />
-        <Stack.Screen name="modal" options={{ presentation: "modal" }} />
-        <Stack.Screen name="profile" options={{ headerShown: false }} />
-        <Stack.Screen
-          name="artist/[profile]"
-          options={{ headerShown: false }}
-        />
-        <Stack.Screen name="vid/[title]" options={{ headerShown: false }} />
-        <Stack.Screen name="create" options={{ headerShown: false }} />
-      </Stack>
-    </AuthProvider>
+    <GestureHandlerRootView style={{ flex: 1 }}>
+      <AuthProvider>
+        <Stack
+          screenOptions={{
+            contentStyle: {
+              backgroundColor: "#191414",
+            },
+          }}
+        >
+          <Stack.Screen name="index" options={{ headerShown: false }} />
+          <Stack.Screen name="(tabs)" options={{ headerShown: false }} />
+          <Stack.Screen name="modal" options={{ presentation: "modal" }} />
+          <Stack.Screen name="profile" options={{ headerShown: false }} />
+          <Stack.Screen
+            name="artist/[profile]"
+            options={{ headerShown: false }}
+          />
+          <Stack.Screen name="vid/[title]" options={{ headerShown: false }} />
+          <Stack.Screen name="create" options={{ headerShown: false }} />
+        </Stack>
+      </AuthProvider>
+    </GestureHandlerRootView>
   );
 }
