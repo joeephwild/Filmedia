@@ -6,7 +6,7 @@ import {
   TextInput,
   View,
 } from "react-native";
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { ScrollView } from "react-native-gesture-handler";
 import { SafeAreaView } from "react-native-safe-area-context";
 import { FontAwesome5 } from "@expo/vector-icons";
@@ -14,8 +14,16 @@ import AllSongs from "../../components/expolore/AllSongs";
 import AllAlbums from "../../components/expolore/AllAlbums";
 import AllArtist from "../../components/expolore/AllArtist";
 import { router } from "expo-router";
+import { useAuth } from "../../context/AuthContext";
+import { DocumentData } from "firebase/firestore";
 
 export default function TabOneScreen() {
+  const [data, setData] = useState<any>(null);
+  const { userData } = useAuth();
+
+  useEffect(() => {
+    setData(userData?.data());
+  });
   return (
     <SafeAreaView className="min-h-screen flex-1">
       <ScrollView
@@ -37,7 +45,7 @@ export default function TabOneScreen() {
               />
               <View>
                 <Text className="text-[18px] font-semibold text-[#fff]">
-                  Sarwar Jahan
+                  {/* {data.email} */}
                 </Text>
                 <Text className="text-[14px] text-[#DEDEDE] font-medium">
                   Gold Member

@@ -12,7 +12,7 @@ import { SafeAreaView } from "react-native-safe-area-context";
 import { ResizeMode, Video } from "expo-av";
 import * as FileSystem from "expo-file-system";
 // import { uploadToNFTStorage } from "../../nftStorage"
-import { uploadFileToPinata } from "../../nftStorage";
+// import { uploadFileToPinata } from "../../nftStorage";
 
 const ContentUpload = () => {
   const [images, setImages] = useState<MediaLibrary.Asset[]>();

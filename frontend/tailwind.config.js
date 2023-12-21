@@ -8,12 +8,11 @@ module.exports = {
   theme: {
     extend: {
       fontFamily: {
-        'nunito': ['Nunito', 'sans-serif'],
-        'opensans-regular': ['OpensansRegular', 'sans-serif'],
-        'opensans-bold': ['OpensansBold', 'sans-serif'],
-        'opensans-light': ['OpensansLight', 'sans-serif'],
-      }
-
+        nunito: ["Nunito", "sans-serif"],
+        "opensans-regular": ["OpensansRegular", "sans-serif"],
+        "opensans-bold": ["OpensansBold", "sans-serif"],
+        "opensans-light": ["OpensansLight", "sans-serif"],
+      },
     },
   },
   plugins: [],

@@ -3,20 +3,29 @@ import React, { useEffect, useState } from "react";
 import {
   createAccount,
   getAccount,
+  getAccountPhrase,
   permanentlyDeleteAccount,
 } from "@rly-network/mobile-sdk";
 import { Alert } from "react-native";
-// import {
-//   User as FirebaseAuthUser,
-//   createUserWithEmailAndPassword,
-//   onAuthStateChanged,
-//   signInWithEmailAndPassword,
-//   updateProfile,
-// } from "firebase/auth";
+import {
+  User as FirebaseAuthUser,
+  createUserWithEmailAndPassword,
+  onAuthStateChanged,
+  signInWithEmailAndPassword,
+  updateProfile,
+} from "firebase/auth";
 // import { auth } from "../firebase";
 // import AsyncStorage from "@react-native-async-storage/async-storage";
 // import { ethers } from "ethers";
 import { Audio } from "expo-av";
+import { auth, db } from "../firebase";
+import {
+  DocumentData,
+  QueryDocumentSnapshot,
+  doc,
+  getDoc,
+  setDoc,
+} from "firebase/firestore";
 
 type Session = string | undefined;
 
@@ -30,14 +39,12 @@ interface DataItem {
 
 type AuthContextValue = {
   session: Session;
-  createAnEOA: (
-    name: string,
-    password: string,
-    lensBool: boolean,
-    privateKey: string
-  ) => Promise<void>;
+  createAnEOA: (email: string, password: string) => Promise<boolean>;
   permanentlyDeleteAccount: () => Promise<void>;
-  signin: (email: string, password: string) => Promise<void>;
+  signin: (
+    email: string,
+    password: string
+  ) => Promise<DocumentData | undefined>;
   playSound(external_url: string, item: any): Promise<void>;
   playerOpen: boolean;
   currentlyPlayed: {
@@ -49,22 +56,28 @@ type AuthContextValue = {
   stopSound(external_url: string): Promise<void>;
   pauseSound(): Promise<void>;
   isPlaying: boolean;
+  userData: QueryDocumentSnapshot<DocumentData, DocumentData> | undefined;
   // Add other values you want to provide through the context here
 };
 
 const AuthContext = React.createContext<AuthContextValue>({
   session: undefined,
-  createAnEOA: async () => {
+  createAnEOA: async (email: string, password: string) => {
     // Default implementation, you may want to handle this differently
     console.warn("createAnEOA function not implemented");
+    return false; // return a boolean value
   },
   permanentlyDeleteAccount: async () => {
     // Default implementation, you may want to handle this differently
     console.warn("permanentlyDeleteAccount function not implemented");
   },
-  signin: async () => {
+  signin: async (
+    email: string,
+    password: string
+  ): Promise<DocumentData | undefined> => {
     // Default implementation, you may want to handle this differently
     console.warn("Signin function not implemented");
+    return undefined; // return undefined as per the expected return type
   },
   playSound: async (external_url: string, item: any): Promise<void> => {
     // Implementation goes here
@@ -83,6 +96,7 @@ const AuthContext = React.createContext<AuthContextValue>({
     return Promise.resolve();
   },
   isPlaying: false,
+  userData: undefined,
 });
 
 export function useAuth() {
@@ -93,12 +107,12 @@ function useProtectedRoute(session: Session) {
   const segments = useSegments();
 
   useEffect(() => {
-    // const inAuthGroup = segments[0] === "(auth)";
-    // if (!session && !inAuthGroup) {
-    //   router.replace("/");
-    // } else if (session && inAuthGroup) {
-    //   router.replace("/(tabs)");
-    // }
+    const inAuthGroup = segments[0] === "(auth)";
+    if (!session && !inAuthGroup) {
+      router.replace("/");
+    } else if (session && inAuthGroup) {
+      router.replace("/(tabs)");
+    }
   }, [session, segments]);
 }
 
@@ -117,33 +131,60 @@ export function AuthProvider({ children }: AuthProviderProps) {
     artist: "",
   });
   const [isPlaying, setIsPlaying] = useState(false);
-  console.log("user", currentlyPlayed);
-  // useProtectedRoute(session);
+  const [userData, setUser] =
+    useState<QueryDocumentSnapshot<DocumentData, DocumentData>>();
+  console.log("user", userData);
+  // useProtectedRoute(userData);
 
-  const createAnEOA = async (
-    name: string,
-    password: string,
-    lensBool: boolean,
-    privateKey: string
-  ) => {
-    // const account = await getAccount();
-    // if (account) {
-    //   return Alert.alert("Account already exist please login");
-    // }
-    // const newAccount = await createAccount();
-    // // mint the user
-    // // add the user to the marketplace contract
-    // const user = {
-    //   walletAddress: newAccount,
-    //   password,
-    //   tokenId: 1,
-    // };
-    // console.log(user);
-    // await AsyncStorage.setItem("user", JSON.stringify(user));
-    // if (newAccount) {
-    //   router.push("/(tabs)");
-    // }
+  const createAnEOA = async (email: string, password: string) => {
+    let userCredential, newAccount;
+
+    try {
+      // Create a new user with email and password
+      userCredential = await createUserWithEmailAndPassword(
+        auth,
+        email,
+        password
+      );
+    } catch (error) {
+      console.error("Error creating user: ", error);
+      return false;
+    }
+
+    const user = userCredential.user;
+
+    if (user) {
+      try {
+        newAccount = await createAccount({
+          storageOptions: {
+            saveToCloud: false,
+            rejectOnCloudSaveFailure: false,
+          },
+        });
+      } catch (error) {
+        console.error("Error creating account: ", error);
+        return false;
+      }
+
+      if (newAccount) {
+        try {
+          // Store the user's email and wallet address in Firestore
+          const docSnap = await setDoc(doc(db, "users", user.uid), {
+            email: email,
+            walletAddress: newAccount,
+          });
+          return true;
+        } catch (error) {
+          console.error("Error storing user data in Firestore: ", error);
+          return false;
+        }
+      }
+    }
+
+    console.log("User registered successfully");
+    return true;
   };
+
   // Add a state for the current sound object
   const [soundObject, setSoundObject] = useState<Audio.Sound | null>(null);
 
@@ -196,53 +237,55 @@ export function AuthProvider({ children }: AuthProviderProps) {
   }
 
   const signin = async (email: string, password: string) => {
-    const account = await getAccount();
+    try {
+      // Try to sign in the user
+      const userCredential = await signInWithEmailAndPassword(
+        auth,
+        email,
+        password
+      );
+      const user = userCredential.user;
 
-    // mint the user
-    // add the user to the marketplace contract
-    // const usesr = {
-    //   walletAddress: account,
-    //   password,
-    //   tokenId: 1,
-    // };
-    // await AsyncStorage.setItem("user", JSON.stringify(usesr));
+      if (user) {
+        // User is signed in, now fetch the user data from Firestore
+        const docRef = doc(db, "users", user.uid);
+        const docSnap = await getDoc(docRef);
 
-    // const user: string = await AsyncStorage.getItem("user");
-    // const parseUser = JSON.parse(user);
-
-    // if (user !== null) {
-    //   if (parseUser.password !== password) {
-    //     return Alert.alert("Password isnt correct");
-    //   }
-
-    //   router.push("/(tabs)");
-    // } else {
-    //   Alert.alert("No user found, Please login");
-    // }
+        if (docSnap.exists()) {
+          // User data exists in Firestore, return it
+          setUser(docSnap);
+          return docSnap.data();
+        } else {
+          // No user data in Firestore, redirect to signup page
+          router.push("/(auth)/");
+        }
+      } else {
+        // No user is signed in, redirect to signup page
+        router.push("/signup");
+      }
+    } catch (error) {
+      console.error("Error signing in: ", error);
+    }
   };
 
   useEffect(() => {
-    const retrieveAccount = async () => {
-      // const account = await getAccount();
-      // setSession(account);
-      // if (session) {
-      //   router.push("/(tabs)");
-      // }
-    };
-    retrieveAccount();
-  }, [session]);
+    if (userData) {
+      router.push("/(tabs)");
+    }
+  }, [userData]);
 
   const contextValue: AuthContextValue = {
     session,
     createAnEOA,
     permanentlyDeleteAccount,
-    signin,
     playSound,
     currentlyPlayed,
     playerOpen,
     stopSound,
     isPlaying,
     pauseSound,
+    signin,
+    userData,
   };
 
   return (

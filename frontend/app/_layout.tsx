@@ -10,7 +10,7 @@ import React, { useEffect } from "react";
 import { View, useColorScheme } from "react-native";
 import { AuthProvider, useAuth } from "../context/AuthContext";
 import { GestureHandlerRootView } from "react-native-gesture-handler";
-import 'react-native-gesture-handler';
+import "react-native-gesture-handler";
 
 export {
   // Catch any errors thrown by the Layout component.
@@ -67,6 +67,7 @@ function RootLayoutNav() {
         >
           <Stack.Screen name="index" options={{ headerShown: false }} />
           <Stack.Screen name="(tabs)" options={{ headerShown: false }} />
+          <Stack.Screen name="(auth)" options={{ headerShown: false }} />
           <Stack.Screen name="modal" options={{ presentation: "modal" }} />
           <Stack.Screen name="profile" options={{ headerShown: false }} />
           <Stack.Screen

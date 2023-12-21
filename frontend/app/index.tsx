@@ -8,6 +8,7 @@ import {
   Gesture,
   Directions,
 } from "react-native-gesture-handler";
+import { router } from "expo-router";
 
 const onBoradingSteps = [
   {
@@ -101,7 +102,7 @@ const Index = () => {
 
   return (
     <GestureDetector gesture={swipes}>
-      <View className="items-center justify-center flex-1">
+      <View className="items-center  justify-center flex-1">
         <StatusBar style="auto" />
         <ImageBackground
           source={{
@@ -111,7 +112,7 @@ const Index = () => {
         >
           <TouchableOpacity
             onPress={handleSkip}
-            className="bg-[#4169E1] rounded-[40px] py-[12px] px-[20px] mt-[80px] items-center justify-center"
+            className="rounded-[40px] py-[12px] px-[20px] mt-[80px] items-center justify-center"
           >
             <Text className="text-[16px]  font-opensans-bold text-[#fff]">
               Skip
@@ -137,14 +138,36 @@ const Index = () => {
           <Text className="text-[14px] font-opensans-regular p-[20px] text-black text-center">
             {data.description}
           </Text>
-          <TouchableOpacity
-            onPress={handleNext}
-            className="bg-[#4169E1] rounded-[40px] py-[16px] mt-[30px] items-center justify-center w-[80%]"
-          >
-            <Text className="text-[16px]  font-opensans-bold text-[#fff]">
-              Get Started
-            </Text>
-          </TouchableOpacity>
+          {currentIndex != 2 && (
+            <TouchableOpacity
+              onPress={handleNext}
+              className="bg-[#4169E1] rounded-[40px] py-[16px] mt-[30px] items-center justify-center w-[80%]"
+            >
+              <Text className="text-[16px]  font-opensans-bold text-[#fff]">
+                Get Started
+              </Text>
+            </TouchableOpacity>
+          )}
+          {currentIndex === 2 && (
+            <View className="flex-row items-center px-9 space-x-[120px]">
+              <TouchableOpacity
+                onPress={() => router.push("/(auth)/login")}
+                className=" rounded-[40px] py-[16px] mt-[30px] items-center justify-center"
+              >
+                <Text className="text-[16px]  font-opensans-bold text-[#000]">
+                  Login
+                </Text>
+              </TouchableOpacity>
+              <TouchableOpacity
+                onPress={() => router.push("/(auth)/")}
+                className="bg-[#4169E1] rounded-[40px] py-[16px] px-[40px] mt-[30px] items-center justify-center"
+              >
+                <Text className="text-[16px]  font-opensans-bold text-[#fff]">
+                  Create Wallet
+                </Text>
+              </TouchableOpacity>
+            </View>
+          )}
         </View>
       </View>
     </GestureDetector>

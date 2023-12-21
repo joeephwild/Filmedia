@@ -14,7 +14,7 @@ import {
 import { SafeAreaView } from "react-native-safe-area-context";
 import { ResizeMode, Video } from "expo-av";
 import * as ImagePicker from "expo-image-picker";
-import { uploadFileToPinata } from "../../nftStorage";
+// import { uploadFileToPinata } from "../../nftStorage";
 
 type Props = {
   setActiveUrl: React.Dispatch<React.SetStateAction<string | undefined>>;
@@ -64,7 +64,7 @@ const CameraPage = ({ setActiveUrl, activeUrl }: Props) => {
         const file = new File([result.assets[0].uri], "video.mp4", {
           type: "video/mp4",
         });
-        await uploadFileToPinata(file);
+        // await uploadFileToPinata(file);
       }
     }
   };
