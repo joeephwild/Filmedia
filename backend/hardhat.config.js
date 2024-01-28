@@ -10,13 +10,13 @@ module.exports = {
     solidity: {
         version: "0.8.17",
         settings: {
-          optimizer: {
-            enabled: true,
-            runs: 1000,
-            details: { yul: false },
-          },
+            optimizer: {
+                enabled: true,
+                runs: 1000,
+                details: { yul: false },
+            },
         },
-      },
+    },
     defaultNetwork: "calibrationnet",
     networks: {
         localnet: {
@@ -24,14 +24,14 @@ module.exports = {
             url: "http://127.0.0.1:1234/rpc/v1",
             accounts: [PRIVATE_KEY],
         },
-        calibrationnet: {
-            chainId: 314159,
-            url: "https://api.calibration.node.glif.io/rpc/v1",
+        AreonNetworkTestnet: {
+            chainId: 462,
+            url: "https://testnet-rpc.areon.network/",
             accounts: [PRIVATE_KEY],
         },
-        filecoinmainnet: {
-            chainId: 314,
-            url: "https://api.node.glif.io",
+        AreonNetworkMainnet: {
+            chainId: 463,
+            url: "https://mainnet-rpc.areon.network/",
             accounts: [PRIVATE_KEY],
         },
     },

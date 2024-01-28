@@ -155,12 +155,7 @@ export function AuthProvider({ children }: AuthProviderProps) {
 
     if (user) {
       try {
-        newAccount = await createAccount({
-          storageOptions: {
-            saveToCloud: false,
-            rejectOnCloudSaveFailure: false,
-          },
-        });
+        newAccount = await createAccount();
       } catch (error) {
         console.error("Error creating account: ", error);
         return false;
@@ -257,7 +252,8 @@ export function AuthProvider({ children }: AuthProviderProps) {
           return docSnap.data();
         } else {
           // No user data in Firestore, redirect to signup page
-          router.push("/(auth)/");
+          Alert.alert("You dont have a wallet created 😒, will create one now");
+          await createAccount();
         }
       } else {
         // No user is signed in, redirect to signup page
