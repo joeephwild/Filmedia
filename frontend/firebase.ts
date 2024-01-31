@@ -5,12 +5,12 @@ import { getFirestore } from "firebase/firestore";
 
 // Your web app's Firebase configuration
 const firebaseConfig = {
-  apiKey: "AIzaSyCtQCksDHoYGzAivV5SCgr4TDpsnjQ5GqY",
-  authDomain: "filmediamobile.firebaseapp.com",
-  projectId: "filmediamobile",
-  storageBucket: "filmediamobile.appspot.com",
-  messagingSenderId: "482827022073",
-  appId: "1:482827022073:web:145b236d425bb9ff8f3c28"
+  apiKey: "AIzaSyCzyjmvOidwYlnJeDHTRdV2vgL0LCAGP5Y",
+  authDomain: "filmedia-4f70f.firebaseapp.com",
+  projectId: "filmedia-4f70f",
+  storageBucket: "filmedia-4f70f.appspot.com",
+  messagingSenderId: "133122974585",
+  appId: "1:133122974585:web:eee84225cbc5c5b4b2c5a8"
 };
 
 // Initialize Firebase

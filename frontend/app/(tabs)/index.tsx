@@ -16,13 +16,20 @@ import AllArtist from "../../components/expolore/AllArtist";
 import { router } from "expo-router";
 import { useAuth } from "../../context/AuthContext";
 import { DocumentData } from "firebase/firestore";
+import { getAccount } from "@rly-network/mobile-sdk";
 
 export default function TabOneScreen() {
   const [data, setData] = useState<any>(null);
   const { userData } = useAuth();
 
   useEffect(() => {
-    setData(userData?.data());
+    const fetchUserAcc = async () => {
+      const account = await getAccount();
+      setData(account);
+      console.log(account)
+    };
+
+    fetchUserAcc()
   });
   return (
     <SafeAreaView className="min-h-screen flex-1">
@@ -44,8 +51,8 @@ export default function TabOneScreen() {
                 className="w-[50px] g-[50px] rounded-full object-contain"
               />
               <View>
-                <Text className="text-[18px] font-semibold text-[#fff]">
-                  {/* {data.email} */}
+                <Text className="text-[16px] font-semibold text-[#fff]">
+                 {data ? data.slice(0, 9) : "Account1"}
                 </Text>
                 <Text className="text-[14px] text-[#DEDEDE] font-medium">
                   Gold Member
@@ -61,7 +68,7 @@ export default function TabOneScreen() {
           </View>
           <View className="flex-row items-center p-3 justify-between">
             <Text className="text-[26px] font-semibold text-[#fff] w-[50%]">
-              Listen The Latest Musics
+              Listen To The Latest Musics
             </Text>
             <View className="bg-transparent border border-[#fff] flex-row items-center space-x-3 w-[50%] p-3 rounded-[40px]">
               <FontAwesome5 name="search" color="#fff" size={10} />

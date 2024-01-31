@@ -52,7 +52,7 @@ const LogIn = () => {
         source={{
           uri: "https://images.pexels.com/photos/1809390/pexels-photo-1809390.jpeg?auto=compress&cs=tinysrgb&w=600",
         }}
-        className="bg-[#fff] h-[450px] w-full"
+        className="min-h-[60%] w-full"
       ></ImageBackground>
       <View className="px-[20px] py-4 h-full space-y-[16px]">
         <View className="items-start">

@@ -10,6 +10,7 @@ import { StatusBar } from "expo-status-bar";
 import { useAuth } from "../../context/AuthContext";
 import { FontAwesome } from "@expo/vector-icons";
 import { permanentlyDeleteAccount } from "@rly-network/mobile-sdk";
+import { router } from "expo-router";
 
 const SignUp = () => {
   const [email, setEmail] = useState("");
@@ -43,6 +44,9 @@ const SignUp = () => {
 
   const handleSubmit = async () => {
     const tx = await createAnEOA(email, password);
+    if (tx) {
+      router.push("/(tabs)");
+    }
   };
   return (
     <View className="flex-1">
@@ -51,7 +55,7 @@ const SignUp = () => {
         source={{
           uri: "https://images.pexels.com/photos/2881010/pexels-photo-2881010.jpeg?auto=compress&cs=tinysrgb&w=600",
         }}
-        className="bg-[#fff] h-[450px] w-full"
+        className="min-h-[60%] w-full"
       ></ImageBackground>
       <View className="px-[20px] py-4 h-full space-y-[16px]">
         <View className="items-start">
