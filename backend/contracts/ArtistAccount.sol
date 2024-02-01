@@ -1,5 +1,5 @@
 // SPDX-License-Identifier: MIT
-pragma solidity ^0.8.19;
+pragma solidity ^0.8.20;
 
 // Importing the FilAccount contract
 import { FilAccount } from "./FilAccount.sol";
@@ -34,7 +34,7 @@ contract MyContract {
     */
    constructor(address _filAccountAddress) {
        // Initialize the FilAccount contract
-       filAccountInstance = _filAccountAddress;
+       filAccountAddress = FilAccount(_filAccountAddress);
    }
 
    /**
@@ -50,8 +50,6 @@ contract MyContract {
        newAcc.uri = _uri;
        // Add the account to the array
        arrayOfAccount.push(newAcc);
-       // Create a new FilAccount instance
-       filAccountAddress = FilAccount();
        // Mint a new token for the account
        filAccountAddress.safeMint(msg.sender, _uri);
    }

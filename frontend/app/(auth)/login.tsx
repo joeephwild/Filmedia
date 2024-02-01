@@ -114,7 +114,7 @@ const LogIn = () => {
             className="bg-[#4169E1] rounded-lg py-[16px] mt-[10px] items-center justify-center w-[90%]"
           >
             <Text className="text-[16px]  font-opensans-bold text-[#fff]">
-              Create Account
+              Log in
             </Text>
           </TouchableOpacity>
         </View>

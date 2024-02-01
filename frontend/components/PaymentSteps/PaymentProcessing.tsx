@@ -6,14 +6,6 @@ import {
   Alert,
 } from "react-native";
 import React, { useState } from "react";
-import {
-  _deposit,
-  _getTokenIdDynamicNFT,
-  _getWalletAddress,
-  _safeMint,
-  _setTokenId,
-  _subcribeToArtist,
-} from "../../constants/_helperFunctions";
 import { router } from "expo-router";
 import { InputField } from "../FormField";
 import { dynamicNftAddress } from "../../constants/addresses";
@@ -34,52 +26,7 @@ const PaymentProcessing = ({
   const [amount, setAmount] = useState("");
   const [loading, setLoading] = useState(false);
 
-  const handleApprove = async () => {
-    let bool: boolean;
-    try {
-      setLoading(true);
-      if (depositing == true) {
-        console.log("skskskksk");
-        bool = await _deposit({ value: amount });
-      } else {
-        bool = await _subcribeToArtist({
-          _artistAddr: artirstAddress,
-        });
-
-        bool = await _safeMint({
-          artistAddress: artirstAddress,
-        });
-
-        const tokenId = await _getTokenIdDynamicNFT();
-        const walletAddress = await _getWalletAddress();
-
-        bool = await _setTokenId({
-          subcriberAddress: walletAddress,
-          artistAddress: artirstAddress,
-          tokenId: tokenId.toString(),
-          nftAddress: dynamicNftAddress,
-        });
-      }
-
-      if (bool == true) {
-        setCurrentStep(2);
-        setLoading(false);
-      } else {
-        Alert.alert(
-          depositing
-            ? "Insufficient Funds"
-            : "You are already subcribed to this artist"
-        );
-        setLoading(false);
-      }
-
-      // setModalVisible(false);
-    } catch (error) {
-      Alert.alert("Sorry, something went wrong");
-      setModalVisible(false);
-      setLoading(false);
-    }
-  };
+  const handleApprove = async () => {};
 
   return (
     <View className="relative">

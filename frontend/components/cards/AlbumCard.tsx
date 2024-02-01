@@ -21,7 +21,7 @@ const AlbumCard = ({ artist, image, name, title }: Props) => {
       <View className="flex-row items-center space-x-2">
         <Text className="text-[14px] font-bold text-[#fff]">1</Text>
         <View>
-          <Text className="text-[14px] font-bold text-[#fff]">Timeless</Text>
+          <Text className="text-[14px] font-bold text-[#fff]">{title}</Text>
           <Link href={`/artist/davido`}>
             <Text className="text-[10px] font-bold text-[#fff]">Davido</Text>
           </Link>

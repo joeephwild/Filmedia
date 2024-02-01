@@ -54,7 +54,7 @@ const ArtistProfile = () => {
         imageStyle={{ resizeMode: "cover" }}
       >
         <LinearGradient
-          colors={["rgba(0, 0, 0, 0.01)", "#191414"]}
+          colors={["rgba(0, 0, 0, 0.01)", "#000"]}
           style={{
             position: "absolute",
             left: 0,

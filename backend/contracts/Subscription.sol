@@ -1,5 +1,5 @@
 //SPDX-License-Identifier: UNLINCENSED
-pragma solidity ^0.8.9;
+pragma solidity ^0.8.20;
 
 contract Subscription {
   uint public nextPlanId;
@@ -8,13 +8,13 @@ contract Subscription {
     uint amount;
     uint frequency;
   }
-  struct Subscription {
+  struct SubscriptionPlan {
     address subscriber;
     uint start;
     uint nextPayment;
   }
   mapping(uint => Plan) public plans;
-  mapping(address => mapping(uint => Subscription)) public subscriptions;
+  mapping(address => mapping(uint => SubscriptionPlan)) public subscriptions;
 
   event PlanCreated(
     address artist,
@@ -61,7 +61,7 @@ contract Subscription {
       block.timestamp
     );
 
-    subscriptions[msg.sender][planId] = Subscription(
+    subscriptions[msg.sender][planId] = SubscriptionPlan(
       msg.sender, 
       block.timestamp, 
       block.timestamp + plan.frequency
@@ -70,7 +70,7 @@ contract Subscription {
   }
 
   function cancel(uint planId) external {
-    Subscription storage subscriptionplan = subscriptions[msg.sender][planId];
+    SubscriptionPlan storage subscriptionplan = subscriptions[msg.sender][planId];
     require(
       subscriptionplan.subscriber != address(0), 
       "subscriptionplan does not exist"
@@ -80,7 +80,7 @@ contract Subscription {
   }
 
   function pay(address subscriber, uint planId) external payable {
-    Subscription storage subscriptionplan = subscriptions[subscriber][planId];
+    SubscriptionPlan storage subscriptionplan = subscriptions[subscriber][planId];
     Plan storage plan = plans[planId];
     require(
       subscriptionplan.subscriber != address(0), 

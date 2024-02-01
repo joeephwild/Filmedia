@@ -30,7 +30,7 @@ export default function TabLayout() {
           },
         }}
         sceneContainerStyle={{
-          backgroundColor: "#191414",
+          backgroundColor: "#000",
         }}
       >
         <Tabs.Screen
@@ -78,7 +78,7 @@ export default function TabLayout() {
             ),
           }}
         />
-        <Tabs.Screen
+        {/* <Tabs.Screen
           name="live"
           options={{
             title: "Live Event",
@@ -86,9 +86,9 @@ export default function TabLayout() {
               <TabBarIcon name="broadcast-tower" color={color} />
             ),
           }}
-        />
+        /> */}
       </Tabs>
-       {playerOpen && <MusicPlayer currentlyplayed={currentlyPlayed} />}
+      {playerOpen && <MusicPlayer currentlyplayed={currentlyPlayed} />}
     </View>
   );
 }

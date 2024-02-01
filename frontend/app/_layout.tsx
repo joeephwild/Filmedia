@@ -11,6 +11,7 @@ import { View, useColorScheme } from "react-native";
 import { AuthProvider, useAuth } from "../context/AuthContext";
 import { GestureHandlerRootView } from "react-native-gesture-handler";
 import "react-native-gesture-handler";
+import { PortalProvider } from "@gorhom/portal";
 
 export {
   // Catch any errors thrown by the Layout component.
@@ -57,27 +58,33 @@ function RootLayoutNav() {
 
   return (
     <GestureHandlerRootView style={{ flex: 1 }}>
-      <AuthProvider>
-        <Stack
-          screenOptions={{
-            contentStyle: {
-              backgroundColor: "#191414",
-            },
-          }}
-        >
-          <Stack.Screen name="index" options={{ headerShown: false }} />
-          <Stack.Screen name="(tabs)" options={{ headerShown: false }} />
-          <Stack.Screen name="(auth)" options={{ headerShown: false }} />
-          <Stack.Screen name="modal" options={{ presentation: "modal" }} />
-          <Stack.Screen name="profile" options={{ headerShown: false }} />
-          <Stack.Screen
-            name="artist/[profile]"
-            options={{ headerShown: false }}
-          />
-          <Stack.Screen name="vid/[title]" options={{ headerShown: false }} />
-          <Stack.Screen name="create" options={{ headerShown: false }} />
-        </Stack>
-      </AuthProvider>
+      <PortalProvider>
+        <AuthProvider>
+          <Stack
+            screenOptions={{
+              contentStyle: {
+                backgroundColor: "#000",
+              },
+            }}
+          >
+            <Stack.Screen name="index" options={{ headerShown: false }} />
+            <Stack.Screen name="(tabs)" options={{ headerShown: false }} />
+            <Stack.Screen name="(auth)" options={{ headerShown: false }} />
+            <Stack.Screen name="modal" options={{ presentation: "modal" }} />
+            <Stack.Screen name="profile" options={{ headerShown: false }} />
+            <Stack.Screen
+              name="artist/[profile]"
+              options={{ headerShown: false }}
+            />
+            <Stack.Screen name="vid/[title]" options={{ headerShown: false }} />
+            <Stack.Screen name="create" options={{ headerShown: false }} />
+            <Stack.Screen
+              name="createProfile"
+              options={{ headerShown: false }}
+            />
+          </Stack>
+        </AuthProvider>
+      </PortalProvider>
     </GestureHandlerRootView>
   );
 }

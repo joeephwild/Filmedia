@@ -1,27 +1,24 @@
 // SPDX-License-Identifier: MIT
-pragma solidity ^0.8.19;
+pragma solidity ^0.8.20;
 
 import { ERC721 } from "@openzeppelin/contracts/token/ERC721/ERC721.sol";
 import { ERC721Enumerable } from "@openzeppelin/contracts/token/ERC721/extensions/ERC721Enumerable.sol";
 import { ERC721URIStorage } from  "@openzeppelin/contracts/token/ERC721/extensions/ERC721URIStorage.sol";
 import { ERC721Pausable } from "@openzeppelin/contracts/token/ERC721/extensions/ERC721Pausable.sol";
 import { ERC721Burnable } from  "@openzeppelin/contracts/token/ERC721/extensions/ERC721Burnable.sol";
-import { Ownable } from  "@openzeppelin/contracts/access/Ownable.sol";
  
-contract FilAccount is ERC721, ERC721Enumerable, ERC721URIStorage, ERC721Pausable, ERC721Burnable, Ownable {
+contract FilAccount is ERC721, ERC721Enumerable, ERC721URIStorage, ERC721Pausable, ERC721Burnable {
     uint256 private _nextTokenId;
 
-    constructor()
-        ERC721("FILACCOUNT", "FIA")
-    {
-        Ownable(msg.sender);
+    constructor(address initialOwner)
+        ERC721("FILACCOUNT", "FIA"){
     }
 
-    function pause() public onlyOwner {
+    function pause() public  {
         _pause();
     }
 
-    function unpause() public onlyOwner {
+    function unpause() public  {
         _unpause();
     }
 

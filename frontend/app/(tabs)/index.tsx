@@ -13,7 +13,7 @@ import { FontAwesome5 } from "@expo/vector-icons";
 import AllSongs from "../../components/expolore/AllSongs";
 import AllAlbums from "../../components/expolore/AllAlbums";
 import AllArtist from "../../components/expolore/AllArtist";
-import { router } from "expo-router";
+import { Link, router } from "expo-router";
 import { useAuth } from "../../context/AuthContext";
 import { DocumentData } from "firebase/firestore";
 import { getAccount } from "@rly-network/mobile-sdk";
@@ -26,10 +26,10 @@ export default function TabOneScreen() {
     const fetchUserAcc = async () => {
       const account = await getAccount();
       setData(account);
-      console.log(account)
+      console.log(account);
     };
 
-    fetchUserAcc()
+    fetchUserAcc();
   });
   return (
     <SafeAreaView className="min-h-screen flex-1">
@@ -46,13 +46,16 @@ export default function TabOneScreen() {
         <View className="pb-[40px]">
           <View className="flex-row items-center p-3 justify-between">
             <View className="flex-row items-start space-x-4">
-              <Image
-                source={require("../../assets/images/profile.jpg")}
-                className="w-[50px] g-[50px] rounded-full object-contain"
-              />
+              <Link href="/createProfile">
+                <Image
+                  source={require("../../assets/images/profile.jpg")}
+                  className="w-[50px] g-[50px] rounded-full object-contain"
+                />
+              </Link>
+
               <View>
                 <Text className="text-[16px] font-semibold text-[#fff]">
-                 {data ? data.slice(0, 9) : "Account1"}
+                  {data ? data.slice(0, 9) : "Account1"}
                 </Text>
                 <Text className="text-[14px] text-[#DEDEDE] font-medium">
                   Gold Member

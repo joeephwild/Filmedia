@@ -6,33 +6,10 @@ import SongsCard from "../cards/SongsCard";
 import { ScrollView } from "react-native-gesture-handler";
 import AlbumCard from "../cards/AlbumCard";
 import ArtistCard from "../cards/ArtistCard";
-import { _getAllArtist } from "../../constants/_helperFunctions";
 import { artistsArr } from "../../utils";
 
 const AllArtist = () => {
   const [artists, setArtist] = useState([]);
-
-  // useEffect(() => {
-  //   const getAllArtist = async () => {
-  //     const artistsall = await _getAllArtist();
-  //     console.log(artistsall, "sssssssss");
-  //     setArtist(artistsall);
-  //   };
-  //   // getAllArtist();
-  // }, []);
-
-  // const artistsArr = [
-  //   {
-  //     tokenId: 1,
-  //   },
-  //   {
-  //     tokenId: 2,
-  //   },
-  //   {
-  //     tokenId: 3,
-  //   },
-  // ];
-
   return (
     <View className="">
       <View className="flex-row items-center justify-between w-full">

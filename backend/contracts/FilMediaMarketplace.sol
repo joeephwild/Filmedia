@@ -22,7 +22,7 @@
 
 // SPDX-License-Identifier: GPL-2.0-or-later
 
-pragma solidity ^0.8.18;
+pragma solidity ^0.8.20;
 
 // import {FilMediaToken} from "./FilMediaToken.sol";
 import {IERC20} from "./interface/IERC20.sol";

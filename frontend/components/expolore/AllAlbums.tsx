@@ -10,37 +10,37 @@ const AllAlbums = () => {
   const songs = [
     {
       name: "Song 1",
-      image: "https://example.com/song1_image.jpg",
+      image: "https://images.pexels.com/photos/15868650/pexels-photo-15868650/free-photo-of-an-alternatively-dressed-woman-with-tattoos.jpeg?auto=compress&cs=tinysrgb&w=600&lazy=load",
       title: "First Melody",
       artist: "Artist A",
     },
     {
       name: "Song 2",
-      image: "https://example.com/song2_image.jpg",
+      image: "https://images.pexels.com/photos/19774960/pexels-photo-19774960/free-photo-of-model-in-headscarf.jpeg?auto=compress&cs=tinysrgb&w=600&lazy=load",
       title: "Groovy Beats",
       artist: "Artist B",
     },
     {
       name: "Song 3",
-      image: "https://example.com/song3_image.jpg",
+      image: "https://images.pexels.com/photos/17591304/pexels-photo-17591304/free-photo-of-narrow-alley-along-historic-townhouses.jpeg?auto=compress&cs=tinysrgb&w=600&lazy=load",
       title: "Serenade in D",
       artist: "Artist C",
     },
     {
       name: "Song 4",
-      image: "https://example.com/song4_image.jpg",
+      image: "https://images.pexels.com/photos/13734186/pexels-photo-13734186.jpeg?auto=compress&cs=tinysrgb&w=600&lazy=load",
       title: "Epic Symphony",
       artist: "Artist D",
     },
     {
       name: "Song 5",
-      image: "https://example.com/song5_image.jpg",
+      image: "https://images.pexels.com/photos/19841288/pexels-photo-19841288/free-photo-of-woman-in-black-elegant-clothes-lying-on-desert.jpeg?auto=compress&cs=tinysrgb&w=600&lazy=load",
       title: "Jazz Fusion",
       artist: "Artist E",
     },
     {
       name: "Song 5",
-      image: "https://example.com/song5_image.jpg",
+      image: "https://images.pexels.com/photos/15571645/pexels-photo-15571645/free-photo-of-the-colour-show.jpeg?auto=compress&cs=tinysrgb&w=600&lazy=load",
       title: "Jazz Fusion",
       artist: "Artist E",
     },
