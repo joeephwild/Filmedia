@@ -77,4 +77,7 @@ contract FilMediaTicketingSystem {
     }
 
     //////////////// GETTERS (PURE AND VIEW)/////////////////////////
+    function getTicket(uint256 tokenId) public view returns (Ticket memory) {
+        return _ticket[tokenId];
+    }
 }
