@@ -79,12 +79,12 @@ const RangeComponents = ({ nfts }: Props) => {
               style={{
                 backgroundColor:
                   active === item.active
-                    ? "#4169E1"
-                    : "rgba(65, 105, 225, 0.40);",
+                    ? "#ADF802"
+                    : "#F8FEEA",
                 paddingHorizontal: 14,
                 paddingVertical: 8,
                 borderRadius: 20,
-                color: "white",
+                color: "#000",
                 overflow: "hidden",
               }}
             >

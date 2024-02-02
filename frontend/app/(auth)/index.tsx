@@ -62,9 +62,6 @@ const SignUp = () => {
           <Text className="text-[20px] font-opensans-bold text-[#fff]">
             Set up your account
           </Text>
-          <Text className="text-[16px] text-gray-600 font-opensans-regular">
-            Create your account and dive into a world of Blockchain.
-          </Text>
         </View>
 
         <View className="space-y-2">
@@ -115,9 +112,9 @@ const SignUp = () => {
         <View className="w-full items-center">
           <TouchableOpacity
             onPress={handleSubmit}
-            className="bg-[#4169E1] rounded-lg py-[16px] mt-[10px] items-center justify-center w-[90%]"
+            className="bg-[#ADF802] rounded-lg py-[16px] mt-[10px] items-center justify-center w-[90%]"
           >
-            <Text className="text-[16px]  font-opensans-bold text-[#fff]">
+            <Text className="text-[16px]  font-opensans-bold text-[#000]">
               Create Account
             </Text>
           </TouchableOpacity>

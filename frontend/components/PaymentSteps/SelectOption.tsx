@@ -32,7 +32,7 @@ const SelectOption = ({ modalVisible, setModalVisible, handleNext }: Props) => {
   return (
     <View>
       <View className="flex-row items-center justify-center">
-        <Text className="w-[200px] text-[12px] text-[#4169E1] text-center font-bold">
+        <Text className="w-[200px] text-[12px] text-[#ADF802] text-center font-bold">
           Continue with your preferred payment method
         </Text>
 
@@ -165,10 +165,10 @@ const SelectOption = ({ modalVisible, setModalVisible, handleNext }: Props) => {
                   </Modal>
                   <TouchableOpacity
                     onPress={handleNext}
-                    className="bg-[#4169E1] flex-row itms-center justify-center py-[8px] px-[24px] mt-9 rounded-[40px]"
+                    className="bg-[#ADF802] flex-row itms-center justify-center py-[8px] px-[24px] mt-9 rounded-[40px]"
                   >
-                    <Text className="text-[12px] font-bold text-[#fff]">
-                      Pay $5 to Subscribe to Davido
+                    <Text className="text-[12px] font-bold text-[#000]">
+                      Pay $5 to Subscribe
                     </Text>
                   </TouchableOpacity>
                 </View>

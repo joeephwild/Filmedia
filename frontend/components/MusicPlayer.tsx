@@ -87,14 +87,14 @@ const MusicPlayer = ({ currentlyplayed }: Props) => {
                       <FontAwesome
                         onPress={handlePlaySound}
                         name="play-circle"
-                        color="#4169E1"
+                        color="#ADF802"
                         size={24}
                       />
                     ) : (
                       <FontAwesome
                         onPress={pauseSound}
                         name="pause-circle"
-                        color="#4169E1"
+                        color="#ADF802"
                         size={24}
                       />
                     )}

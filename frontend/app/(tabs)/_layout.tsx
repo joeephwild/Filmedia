@@ -22,10 +22,10 @@ export default function TabLayout() {
     <View style={{ flex: 1, flexDirection: "column-reverse" }}>
       <Tabs
         screenOptions={{
-          tabBarActiveTintColor: "#F0F0F0",
+          tabBarActiveTintColor: "#ADF802",
           headerShown: false,
           tabBarStyle: {
-            backgroundColor: "#1B1212",
+            backgroundColor: "#000",
             // borderTopColor: "transparent",
           },
         }}

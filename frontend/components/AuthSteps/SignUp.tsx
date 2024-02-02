@@ -79,7 +79,7 @@ const SignUp = ({ setCurrentScreen }: Props) => {
           <View className="space-y-[8px]">
             <TouchableOpacity
               onPress={handleSubmit}
-              className="py-[16px] px-[40px] items-center bg-[#4169E1] rounded-[40px]"
+              className="py-[16px] px-[40px] items-center bg-[#ADF802] rounded-[40px]"
             >
               <Text className="text-[14px] font-bold text-[#fff]">
                 Create Account
@@ -89,7 +89,7 @@ const SignUp = ({ setCurrentScreen }: Props) => {
               Already signed up?{" "}
               <Text
                 onPress={() => setCurrentScreen(1)}
-                className="text-[#4169E1]"
+                className="text-[#ADF802]"
               >
                 Log In
               </Text>

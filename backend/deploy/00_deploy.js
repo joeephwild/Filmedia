@@ -46,5 +46,17 @@ module.exports = async ({ deployments }) => {
         log: true,
     })
 
-    console.log(`deployed ${filMediaArtistNFT.address}`)
+    const FilMediaTicketNFT = await deploy('FilMediaTicketNFT', {
+        from: wallet.address,
+        args: [],
+        log: true,
+    })
+
+    const FilMediaTicketingSystem = await deploy('FilMediaTicketingSystem', {
+        from: wallet.address,
+        args: [FilMediaTicketNFT.address],
+        log: true,
+    })
+
+   
 }

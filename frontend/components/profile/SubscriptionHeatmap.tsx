@@ -34,11 +34,11 @@ const SubscriptionHeatmap = () => {
               onPress={() => setIsActive(item)}
               key={index}
               style={{
-                backgroundColor: active === item ? "#4169E1" : "transparent",
+                backgroundColor: active === item ? "#ADF802" : "transparent",
                 paddingHorizontal: 20,
                 paddingVertical: 5,
                 borderRadius: 8,
-                color: "white",
+                color: active === item ? "#000" : "#fff",
                 overflow: "hidden",
                 fontSize: 12,
               }}

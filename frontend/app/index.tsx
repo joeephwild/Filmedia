@@ -141,9 +141,9 @@ const Index = () => {
           {currentIndex != 2 && (
             <TouchableOpacity
               onPress={handleNext}
-              className="bg-[#4169E1] rounded-[40px] py-[16px] mt-[30px] items-center justify-center w-[80%]"
+              className="bg-[#ADF802] rounded-[40px] py-[16px] mt-[30px] items-center justify-center w-[80%]"
             >
-              <Text className="text-[16px]  font-opensans-bold text-[#fff]">
+              <Text className="text-[16px]  font-opensans-bold text-[#000]">
                 Get Started
               </Text>
             </TouchableOpacity>
@@ -160,9 +160,9 @@ const Index = () => {
               </TouchableOpacity>
               <TouchableOpacity
                 onPress={() => router.push("/(auth)/")}
-                className="bg-[#4169E1] rounded-[40px] py-[16px] px-[40px] mt-[30px] items-center justify-center"
+                className="bg-[#ADF802] rounded-[40px] py-[16px] px-[40px] mt-[30px] items-center justify-center"
               >
-                <Text className="text-[16px]  font-opensans-bold text-[#fff]">
+                <Text className="text-[16px]  font-opensans-bold text-[#000]">
                   Create Wallet
                 </Text>
               </TouchableOpacity>

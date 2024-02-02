@@ -54,13 +54,10 @@ const LogIn = () => {
         }}
         className="min-h-[60%] w-full"
       ></ImageBackground>
-      <View className="px-[20px] py-4 h-full space-y-[16px]">
+      <View className="px-[20px] py-4 min-h-[40%] space-y-[16px]">
         <View className="items-start">
           <Text className="text-[20px] font-opensans-bold text-[#fff]">
             Welcome Back 😁
-          </Text>
-          <Text className="text-[16px] text-gray-600 font-opensans-regular">
-            Create your account and dive into a world of Blockchain.
           </Text>
         </View>
         <View className="space-y-2">
@@ -111,9 +108,9 @@ const LogIn = () => {
         <View className="w-full items-center">
           <TouchableOpacity
             onPress={handleSubmit}
-            className="bg-[#4169E1] rounded-lg py-[16px] mt-[10px] items-center justify-center w-[90%]"
+            className="bg-[#ADF802] rounded-lg py-[16px] mt-[10px] items-center justify-center w-[90%]"
           >
-            <Text className="text-[16px]  font-opensans-bold text-[#fff]">
+            <Text className="text-[16px]  font-opensans-bold text-[#000]">
               Log in
             </Text>
           </TouchableOpacity>

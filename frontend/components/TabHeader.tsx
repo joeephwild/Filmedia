@@ -3,7 +3,7 @@ import React, { useRef } from "react";
 import FontAwesome from "@expo/vector-icons/FontAwesome";
 import { router } from "expo-router";
 import { Portal } from "@gorhom/portal";
-import BottomSheet, { BottomSheetMethods } from '@devvie/bottom-sheet';
+import BottomSheet, { BottomSheetMethods } from "@devvie/bottom-sheet";
 import BottomsheetCom from "./BottomsheetCom";
 
 const TabHeader = () => {
@@ -21,7 +21,7 @@ const TabHeader = () => {
             />
           </Pressable>
 
-          <Text className="text-[24px] font-bold text-[#4169E1]">
+          <Text className="text-[24px] font-bold text-[#ADF802]">
             Hi <Text className="text-white">John Doe</Text>
           </Text>
         </View>

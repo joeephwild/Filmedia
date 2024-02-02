@@ -83,7 +83,7 @@ const ArtistProfile = () => {
             style={{
               marginTop: 29,
               paddingHorizontal: 24,
-              backgroundColor: "#4169E1",
+              backgroundColor: "#ADF802",
               paddingVertical: 8,
               alignItems: "center",
               justifyContent: "center",
@@ -91,7 +91,7 @@ const ArtistProfile = () => {
             }}
             className="mx-auto mr-4"
           >
-            <Text style={{ fontSize: 12, fontWeight: "bold", color: "#fff" }}>
+            <Text style={{ fontSize: 12, fontWeight: "bold", color: "#000" }}>
               Subscribe for $5
             </Text>
           </TouchableOpacity>
@@ -100,7 +100,7 @@ const ArtistProfile = () => {
             style={{
               marginTop: 29,
               paddingHorizontal: 24,
-              backgroundColor: "#4169E1",
+              backgroundColor: "#ADF802",
               paddingVertical: 8,
               alignItems: "center",
               justifyContent: "center",
@@ -108,7 +108,7 @@ const ArtistProfile = () => {
             }}
             className="mx-auto"
           >
-            <Text style={{ fontSize: 12, fontWeight: "bold", color: "#fff" }}>
+            <Text style={{ fontSize: 12, fontWeight: "bold", color: "#000" }}>
               Follow
             </Text>
           </TouchableOpacity>
