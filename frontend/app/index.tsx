@@ -9,7 +9,14 @@ import {
   Directions,
 } from "react-native-gesture-handler";
 import { router } from "expo-router";
+import { useWalletConnectModal } from "@walletconnect/modal-react-native";
 
+import { LensClient, production } from "@lens-protocol/client";
+import { ethers } from "ethers";
+
+const lensClient = new LensClient({
+  environment: production,
+});
 const onBoradingSteps = [
   {
     title: "Welcome to Filmedia, where Social Content and blockchain unite!",
@@ -62,9 +69,67 @@ const Index = () => {
   //   const ipfsHashes = ['QmNT9dVCgGfxEViKZzYLhH114rgiYDT227cVDYVz1y3zvH', 'QmYGgPqaC483J5B9KczHRV9t1fDRkFtiLo5J2zMvqcZWuv'];
   //   getNFTs(ipfsHashes); // Call the function
   // }, []);
+  const { isOpen, open, close, provider, isConnected, address } =
+    useWalletConnectModal();
+  console.log(address);
+  const [profileId, setProfileId] = useState("");
+  console.log(provider);
+
+  useEffect(() => {
+    const getProfiles = async () => {
+      if (address) {
+        const allOwnedProfiles = await lensClient.profile.fetchAll({
+          where: { ownedBy: [address] },
+        });
+
+        // Assuming the first profile's handle is what we want to set as profileId
+        const firstProfileHandle = allOwnedProfiles.items[0]?.id;
+        if (firstProfileHandle) {
+          setProfileId(firstProfileHandle);
+        }
+
+        console.log(
+          `Profiles owned by address: ${address}: `,
+          allOwnedProfiles.items.map((i) => ({
+            id: i.id,
+            handle: i.handle?.fullHandle,
+          }))
+        );
+      }
+    };
+    getProfiles();
+  }, []);
+
+  const signInToLens = async () => {
+    if (address) {
+      const { id, text } = await lensClient.authentication.generateChallenge({
+        signedBy: address, // e.g "0xdfd7D26fd33473F475b57556118F8251464a24eb"
+        for: profileId, // e.g "0x01"
+      });
+      console.log(id, text);
+      const signature = provider?.request({
+        method: "personal_sign",
+        params: [text, address],
+      });
+      const res = await lensClient.authentication.authenticate({
+        id,
+        signature,
+      });
+      console.log(res)
+    }
+  };
+
   const [currentIndex, setCurrentIndex] = useState(0);
 
   const data = onBoradingSteps[currentIndex];
+
+  const onPress = () => {
+    if (isConnected) {
+      provider?.disconnect();
+    } else {
+      open();
+    }
+  };
 
   const handleNext = () => {
     if (currentIndex === onBoradingSteps.length - 1) {
@@ -158,14 +223,25 @@ const Index = () => {
                   Login
                 </Text>
               </TouchableOpacity>
-              <TouchableOpacity
-                onPress={() => router.push("/(auth)/")}
-                className="bg-[#ADF802] rounded-[40px] py-[16px] px-[40px] mt-[30px] items-center justify-center"
-              >
-                <Text className="text-[16px]  font-opensans-bold text-[#000]">
-                  Create Wallet
-                </Text>
-              </TouchableOpacity>
+              {address ? (
+                <TouchableOpacity
+                  onPress={signInToLens}
+                  className="bg-[#ADF802] rounded-[40px] py-[16px] px-[40px] mt-[30px] items-center justify-center"
+                >
+                  <Text className="text-[16px]  font-opensans-bold text-[#000]">
+                    Sign to lens
+                  </Text>
+                </TouchableOpacity>
+              ) : (
+                <TouchableOpacity
+                  onPress={onPress}
+                  className="bg-[#ADF802] rounded-[40px] py-[16px] px-[40px] mt-[30px] items-center justify-center"
+                >
+                  <Text className="text-[16px]  font-opensans-bold text-[#000]">
+                    Create Wallet
+                  </Text>
+                </TouchableOpacity>
+              )}
             </View>
           )}
         </View>
