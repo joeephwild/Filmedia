@@ -3,8 +3,8 @@
   "main": "expo-router/entry",
   "version": "1.0.0",
   "scripts": {
-    "start": "expo start",
-    "android": "expo start --android",
+    "start": "cross-env NODE_ENV=development expo start",
+    "android": "cross-env NODE_ENV=development expo start --android",
     "ios": "expo start --ios",
     "web": "expo start --web",
     "test": "jest --watchAll"
@@ -13,6 +13,7 @@
     "preset": "jest-expo"
   },
   "dependencies": {
+    "@airstack/airstack-react": "^0.6.2",
     "@apollo/client": "^3.8.8",
     "@devvie/bottom-sheet": "^0.2.1",
     "@expo/vector-icons": "^13.0.0",
@@ -26,6 +27,8 @@
     "@rly-network/mobile-sdk": "^1.2.0",
     "@walletconnect/modal-react-native": "^1.1.0",
     "@walletconnect/react-native-compat": "^2.11.1",
+    "cross-env": "^7.0.3",
+    "dayjs": "^1.11.10",
     "ethers": "^5.7.2",
     "expo": "~49.0.18",
     "expo-av": "~13.4.1",
@@ -45,7 +48,8 @@
     "nativewind": "^2.0.11",
     "react": "18.2.0",
     "react-dom": "18.2.0",
-    "react-native": "0.72.6",
+    "react-native": "0.72.10",
+    "react-native-config": "^1.5.1",
     "react-native-gesture-handler": "~2.12.0",
     "react-native-get-random-values": "~1.9.0",
     "react-native-modal": "^13.0.1",

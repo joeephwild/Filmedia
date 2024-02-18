@@ -1,18 +1,18 @@
-import { View, Text, ImageBackground, TouchableOpacity } from "react-native";
-import React, { useEffect, useState } from "react";
-import { SafeAreaView } from "react-native-safe-area-context";
-import { StatusBar } from "expo-status-bar";
-import {
-  GestureDetector,
-  PanGestureHandler,
-  Gesture,
-  Directions,
-} from "react-native-gesture-handler";
-import { router } from "expo-router";
 import { useWalletConnectModal } from "@walletconnect/modal-react-native";
+import { router } from "expo-router";
+import { StatusBar } from "expo-status-bar";
+import React, { useEffect, useState } from "react";
+import { ImageBackground, Text, TouchableOpacity, View } from "react-native";
+import {
+  Directions,
+  Gesture,
+  GestureDetector
+} from "react-native-gesture-handler";
 
 import { LensClient, production } from "@lens-protocol/client";
-import { ethers } from "ethers";
+import dayjs from "dayjs";
+import trendingMints from "../components/trendingMInts";
+import { interval } from '../utils/contants';
 
 const lensClient = new LensClient({
   environment: production,
@@ -110,9 +110,10 @@ const Index = () => {
       const signature = provider?.request({
         method: "personal_sign",
         params: [text, address],
-      });
+      }) || null;
       const res = await lensClient.authentication.authenticate({
         id,
+        // @ts-ignore
         signature,
       });
       console.log(res)
@@ -165,6 +166,20 @@ const Index = () => {
 
   const swipes = Gesture.Race(swipeForward, swipeBackward);
 
+  const currentTime = dayjs();
+  const getData = async () => {
+    const data = await trendingMints(currentTime);
+    console.log('data : ', data);
+    data.length > 0 && data.map((data: any, i: Number) => {
+      const { token, score } = data;
+      const message = `${token?.name} have been minted more than ${score} times 
+    the last ${interval} hours`;
+      console.log(message);
+    });
+  }
+
+  getData();
+
   return (
     <GestureDetector gesture={swipes}>
       <View className="items-center  justify-center flex-1">
@@ -187,11 +202,10 @@ const Index = () => {
             {onBoradingSteps.map((_, index) => (
               <View
                 key={index}
-                className={`h-2 rounded w-[20px] ${
-                  currentIndex === index
-                    ? "bg-blue-400"
-                    : "bg-white w-2 rounded-full"
-                }`}
+                className={`h-2 rounded w-[20px] ${currentIndex === index
+                  ? "bg-blue-400"
+                  : "bg-white w-2 rounded-full"
+                  }`}
               />
             ))}
           </View>
