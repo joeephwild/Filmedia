@@ -13,6 +13,7 @@ import { LensClient, production } from "@lens-protocol/client";
 import dayjs from "dayjs";
 import trendingMints from "../components/trendingMInts";
 import { interval } from '../utils/contants';
+import TrendingMintsSwiper from "../components/TrendingMintsSwipper";
 
 const lensClient = new LensClient({
   environment: production,
@@ -168,17 +169,38 @@ const Index = () => {
 
   const currentTime = dayjs();
   const getData = async () => {
+    console.log('hii');
     const data = await trendingMints(currentTime);
     console.log('data : ', data);
     data.length > 0 && data.map((data: any, i: Number) => {
       const { token, score } = data;
-      const message = `${token?.name} have been minted more than ${score} times 
+      const message = `${token?.name} have been minted more than ${score} times
     the last ${interval} hours`;
       console.log(message);
     });
   }
 
   getData();
+
+  // const [mintsData, setMintsData] = useState([]);
+
+  // useEffect(() => {
+  //   console.log('working ????');
+  //   const currentTime = dayjs();
+
+  //   const getData = async () => {
+  //     const data = await trendingMints(currentTime);
+  //     console.log("data : ", data);
+  //     if(data && data.length > 0) {
+  //       setMintsData(data);
+  //     }
+  //     console.log('data : ', data);
+  //   };
+
+  //   getData();
+  // }, []);
+
+  // console.log("mintsDat : ", mintsData)
 
   return (
     <GestureDetector gesture={swipes}>
@@ -259,6 +281,10 @@ const Index = () => {
             </View>
           )}
         </View>
+        <Text style={{ fontSize: 24, textAlign: 'center', marginTop: 20 }}>
+          Trending Mints
+        </Text>
+        {/* <TrendingMintsSwiper data={mintsData} /> */}
       </View>
     </GestureDetector>
   );
