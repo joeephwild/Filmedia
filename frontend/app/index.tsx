@@ -1,7 +1,7 @@
 import { useWalletConnectModal } from "@walletconnect/modal-react-native";
 import { router } from "expo-router";
 import { StatusBar } from "expo-status-bar";
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import { ImageBackground, Text, TouchableOpacity, View } from "react-native";
 import {
   Directions,
@@ -166,6 +166,27 @@ const Index = () => {
     });
 
   const swipes = Gesture.Race(swipeForward, swipeBackward);
+
+  // const m: any = [];
+  const mintsDataRef = useRef<any[]>([]);
+
+  const currentTime = dayjs();
+  const getData = async () => {
+    console.log('hii');
+    const data = await trendingMints(currentTime);
+    console.log('data : ', data);
+    mintsDataRef.current = data;
+    data.length > 0 && data.map((data: any, i: Number) => {
+      const { token, score } = data;
+      const message = `${token?.name} have been minted more than ${score} times
+    the last ${interval} hours`;
+      console.log(message);
+    });
+  }
+
+  getData();
+
+  console.log('mitns Data : ', mintsDataRef.current);
 
   return (
     <GestureDetector gesture={swipes}>
