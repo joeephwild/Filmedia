@@ -6,13 +6,13 @@ import { ImageBackground, Text, TouchableOpacity, View } from "react-native";
 import {
   Directions,
   Gesture,
-  GestureDetector
+  GestureDetector,
 } from "react-native-gesture-handler";
 
 import { LensClient, production } from "@lens-protocol/client";
 import dayjs from "dayjs";
 import trendingMints from "../components/trendingMInts";
-import { interval } from '../utils/contants';
+import { interval } from "../utils/contants";
 import TrendingMintsSwiper from "../components/TrendingMintsSwipper";
 
 const lensClient = new LensClient({
@@ -70,11 +70,10 @@ const Index = () => {
   //   const ipfsHashes = ['QmNT9dVCgGfxEViKZzYLhH114rgiYDT227cVDYVz1y3zvH', 'QmYGgPqaC483J5B9KczHRV9t1fDRkFtiLo5J2zMvqcZWuv'];
   //   getNFTs(ipfsHashes); // Call the function
   // }, []);
-  const { isOpen, open, close, provider, isConnected, address } =
+  const { open,  provider, isConnected, address } =
     useWalletConnectModal();
   console.log(address);
   const [profileId, setProfileId] = useState("");
-  console.log(provider);
 
   useEffect(() => {
     const getProfiles = async () => {
@@ -108,16 +107,17 @@ const Index = () => {
         for: profileId, // e.g "0x01"
       });
       console.log(id, text);
-      const signature = provider?.request({
-        method: "personal_sign",
-        params: [text, address],
-      }) || null;
+      const signature =
+        provider?.request({
+          method: "personal_sign",
+          params: [text, address],
+        }) || null;
       const res = await lensClient.authentication.authenticate({
         id,
         // @ts-ignore
         signature,
       });
-      console.log(res)
+      console.log(res);
     }
   };
 
@@ -167,41 +167,6 @@ const Index = () => {
 
   const swipes = Gesture.Race(swipeForward, swipeBackward);
 
-  const currentTime = dayjs();
-  const getData = async () => {
-    console.log('hii');
-    const data = await trendingMints(currentTime);
-    console.log('data : ', data);
-    data.length > 0 && data.map((data: any, i: Number) => {
-      const { token, score } = data;
-      const message = `${token?.name} have been minted more than ${score} times
-    the last ${interval} hours`;
-      console.log(message);
-    });
-  }
-
-  getData();
-
-  // const [mintsData, setMintsData] = useState([]);
-
-  // useEffect(() => {
-  //   console.log('working ????');
-  //   const currentTime = dayjs();
-
-  //   const getData = async () => {
-  //     const data = await trendingMints(currentTime);
-  //     console.log("data : ", data);
-  //     if(data && data.length > 0) {
-  //       setMintsData(data);
-  //     }
-  //     console.log('data : ', data);
-  //   };
-
-  //   getData();
-  // }, []);
-
-  // console.log("mintsDat : ", mintsData)
-
   return (
     <GestureDetector gesture={swipes}>
       <View className="items-center  justify-center flex-1">
@@ -224,10 +189,11 @@ const Index = () => {
             {onBoradingSteps.map((_, index) => (
               <View
                 key={index}
-                className={`h-2 rounded w-[20px] ${currentIndex === index
-                  ? "bg-blue-400"
-                  : "bg-white w-2 rounded-full"
-                  }`}
+                className={`h-2 rounded w-[20px] ${
+                  currentIndex === index
+                    ? "bg-blue-400"
+                    : "bg-white w-2 rounded-full"
+                }`}
               />
             ))}
           </View>
@@ -251,40 +217,44 @@ const Index = () => {
           )}
           {currentIndex === 2 && (
             <View className="flex-row items-center px-9 space-x-[120px]">
-              <TouchableOpacity
-                onPress={() => router.push("/(auth)/login")}
-                className=" rounded-[40px] py-[16px] mt-[30px] items-center justify-center"
-              >
-                <Text className="text-[16px]  font-opensans-bold text-[#000]">
-                  Login
-                </Text>
-              </TouchableOpacity>
               {address ? (
-                <TouchableOpacity
-                  onPress={signInToLens}
-                  className="bg-[#ADF802] rounded-[40px] py-[16px] px-[40px] mt-[30px] items-center justify-center"
-                >
-                  <Text className="text-[16px]  font-opensans-bold text-[#000]">
-                    Sign to lens
-                  </Text>
-                </TouchableOpacity>
+                <View className="w-full">
+                  <TouchableOpacity
+                    onPress={() => router.push("/(tabs)")}
+                    className="bg-[#ADF802] rounded-[40px] py-[16px] px-[40px] mt-[20px] items-center justify-center"
+                  >
+                    <Text className="text-[16px]  font-opensans-bold text-[#000]">
+                      Explore
+                    </Text>
+                  </TouchableOpacity>
+                  <TouchableOpacity
+                    onPress={() => provider?.disconnect()}
+                    className="items-center justify-center mt-5"
+                  >
+                    <Text className="text-[12px] font-opensans-regular text-[#000]">
+                      Disconnect Wallet
+                    </Text>
+                  </TouchableOpacity>
+                </View>
               ) : (
-                <TouchableOpacity
-                  onPress={onPress}
-                  className="bg-[#ADF802] rounded-[40px] py-[16px] px-[40px] mt-[30px] items-center justify-center"
-                >
-                  <Text className="text-[16px]  font-opensans-bold text-[#000]">
-                    Create Wallet
-                  </Text>
-                </TouchableOpacity>
+                <View className="w-full">
+                  <TouchableOpacity
+                    onPress={onPress}
+                    className="bg-[#ADF802] rounded-[40px] py-[16px] px-[40px] mt-[20px] items-center justify-center"
+                  >
+                    <Text className="text-[16px]  font-opensans-bold text-[#000]">
+                      Connect Wallet
+                    </Text>
+                  </TouchableOpacity>
+                </View>
               )}
             </View>
           )}
         </View>
-        <Text style={{ fontSize: 24, textAlign: 'center', marginTop: 20 }}>
+        {/* <Text style={{ fontSize: 24, textAlign: "center", marginTop: 20 }}>
           Trending Mints
         </Text>
-        {/* <TrendingMintsSwiper data={mintsData} /> */}
+        <TrendingMintsSwiper data={mintsData} /> */}
       </View>
     </GestureDetector>
   );

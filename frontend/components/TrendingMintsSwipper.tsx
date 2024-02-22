@@ -1,70 +1,64 @@
-import React, { useState } from 'react';
-import { View, Text, StyleSheet, ScrollView, Dimensions } from 'react-native';
-import { Card } from 'react-native-elements';
-import Swiper from 'react-native-swiper';
-import { interval } from '../utils/contants';
+import React from "react";
+import { View, Text, StyleSheet, Image } from "react-native";
+import Carousel from "react-native-snap-carousel";
+import { interval } from "../utils/contants";
+import { artistsArr } from "../utils";
 
-const TrendingMintsSwiper = ({ data }:any) => {
-  const renderMintCard = (mint:any, index:any) => {
-    const { token, score } = mint;
-    const message = `${token?.name} have been minted more than ${score} times 
-    the last ${interval} hours`;
-
-      return (
-        // @ts-ignore
-      <Card key={index}>
-        <Card.Title>{token?.name}</Card.Title>
-        <Card.Divider />
-        <Text style={styles.message}>{message}</Text>
-      </Card>
-    );
-  };
+const renderMintCard = (mint: any, index: any) => {
+  const { token, score } = mint;
+  const message = `${token?.name} have been minted more than ${score} times   
+  the last ${interval} hours`;
 
   return (
-    <Swiper
-      style={styles.swiper}
-      showsButtons={true}
-      buttonWrapperStyle={styles.buttonWrapper}
-      nextButton={<Text style={styles.buttonText}>Next</Text>}
-      prevButton={<Text style={styles.buttonText}>Prev</Text>}
-    >
-      {data.map((mint:any, index:any) => (
-        <View key={index} style={styles.slide}>
-          {renderMintCard(mint, index)}
+    <View key={index} style={styles.slide}>
+      <Image source={{ uri: token?.imageUrl }} style={styles.image} />
+      <Text style={styles.message}>{message}</Text>
+    </View>
+  );
+};
+
+const TrendingMintsSwiper = ({ data }: any) => {
+  return (
+    <View style={styles.swiper}>
+      <Carousel
+        data={data}
+        renderItem={({ item, index }) => (
+          <View key={index} style={styles.slide}>
+         
+          <Text style={styles.message}>{item.chain}</Text>
         </View>
-      ))}
-    </Swiper>
+        )}
+        layout={"stack"}
+        layoutCardOffset={18}
+        itemWidth={200}
+        sliderHeight={500}
+        sliderWidth={300}
+        itemHeight={500}
+      />
+    </View>
   );
 };
 
 const styles = StyleSheet.create({
   swiper: {
-    flex: 1,
+    flex:   1,
   },
   slide: {
-    flex: 1,
-    justifyContent: 'center',
-    alignItems: 'center',
-    backgroundColor: '#fff',
+    flex:   1,
+    justifyContent: "center",
+    alignItems: "center",
+    backgroundColor: "#fff",
+    height: 100
   },
-  buttonWrapper: {
-    flexDirection: 'row',
-    position: 'absolute',
-    bottom: 0,
-    left: 0,
-    right: 0,
-    justifyContent: 'space-between',
-    padding: 10,
-  },
-  buttonText: {
-    fontSize: 16,
-    color: '#007aff',
-    padding: 10,
+  image: {
+    width:  100,
+    height:  100,
+    resizeMode: "cover",
   },
   message: {
-    textAlign: 'center',
-    color: '#333',
-    padding: 5,
+    textAlign: "center",
+    color: "#333",
+    padding:   5,
   },
 });
 

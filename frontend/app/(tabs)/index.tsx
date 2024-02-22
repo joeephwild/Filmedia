@@ -14,23 +14,34 @@ import AllSongs from "../../components/expolore/AllSongs";
 import AllAlbums from "../../components/expolore/AllAlbums";
 import AllArtist from "../../components/expolore/AllArtist";
 import { Link, router } from "expo-router";
-import { useAuth } from "../../context/AuthContext";
-import { DocumentData } from "firebase/firestore";
-import { getAccount } from "@rly-network/mobile-sdk";
+import dayjs from "dayjs";
+import trendingMints from "../../components/trendingMInts";
+import { interval } from "../../utils/contants";
+import TrendingMintsSwiper from "../../components/TrendingMintsSwipper";
 
 export default function TabOneScreen() {
   const [data, setData] = useState<any>(null);
-  const { userData } = useAuth();
+  console.log("data : ", data);
 
   useEffect(() => {
-    const fetchUserAcc = async () => {
-      const account = await getAccount();
-      setData(account);
-      console.log(account);
+    const currentTime = dayjs();
+
+    const getData = async () => {
+      console.log("hii");
+      const dataresult = await trendingMints(currentTime);
+      console.log("dataresult : ", dataresult);
+      setData(dataresult);
+      data.length > 0 &&
+        data.map((data: any, i: Number) => {
+          const { token, score } = data;
+          const message = `${token?.name} have been minted more than ${score} times
+      the last ${interval} hours`;
+          console.log(message);
+        });
     };
 
-    fetchUserAcc();
-  });
+    getData();
+  }, []);
   return (
     <SafeAreaView className="min-h-screen flex-1">
       <ScrollView
@@ -83,8 +94,7 @@ export default function TabOneScreen() {
             </View>
           </View>
         </View>
-
-        {/* <CarouselCompoent /> */}
+         <TrendingMintsSwiper data={data} />
         <View className="space-y-[20px]">
           <AllSongs />
           <AllAlbums />

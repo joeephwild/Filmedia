@@ -1,28 +1,31 @@
-import '@walletconnect/react-native-compat'
-import { WalletConnectModal } from '@walletconnect/modal-react-native'
+import "@walletconnect/react-native-compat";
+import {
+  WalletConnectModal,
+  useWalletConnectModal,
+} from "@walletconnect/modal-react-native";
 
 import FontAwesome from "@expo/vector-icons/FontAwesome";
 import { useFonts } from "expo-font";
-import { SplashScreen, Stack } from "expo-router";
+import { SplashScreen, Stack, router } from "expo-router";
 import React, { useEffect } from "react";
-import {  useColorScheme } from "react-native";
+import { useColorScheme } from "react-native";
 import { AuthProvider } from "../context/AuthContext";
 import { GestureHandlerRootView } from "react-native-gesture-handler";
 import "react-native-gesture-handler";
 import { PortalProvider } from "@gorhom/portal";
 
-const projectId = 'faacd6df1eda3779a685e127d4cac05a'
+const projectId = "faacd6df1eda3779a685e127d4cac05a";
 
 const providerMetadata = {
-  name: 'GameVerse',
-  description: 'YOUR_PROJECT_DESCRIPTION',
-  url: 'https://your-project-website.com/',
-  icons: ['https://your-project-logo.com/'],
+  name: "GameVerse",
+  description: "YOUR_PROJECT_DESCRIPTION",
+  url: "https://your-project-website.com/",
+  icons: ["https://your-project-logo.com/"],
   redirect: {
-    native: 'YOUR_APP_SCHEME://',
-    universal: 'YOUR_APP_UNIVERSAL_LINK.com'
-  }
-}
+    native: "YOUR_APP_SCHEME://",
+    universal: "YOUR_APP_UNIVERSAL_LINK.com",
+  },
+};
 
 export {
   // Catch any errors thrown by the Layout component.
@@ -65,12 +68,23 @@ export default function RootLayout() {
 }
 
 function RootLayoutNav() {
-  const colorScheme = useColorScheme();
+  const { isOpen, open, close, provider, isConnected, address } =
+    useWalletConnectModal();
 
+  useEffect(() => {
+    if (address) {
+      router.push("/(tabs)");
+    } else {
+      router.push("/");
+    }
+  }, [address]);
   return (
     <GestureHandlerRootView style={{ flex: 1 }}>
       <PortalProvider>
-      <WalletConnectModal projectId={projectId} providerMetadata={providerMetadata} />
+        <WalletConnectModal
+          projectId={projectId}
+          providerMetadata={providerMetadata}
+        />
         <AuthProvider>
           <Stack
             screenOptions={{
