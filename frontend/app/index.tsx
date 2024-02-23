@@ -10,10 +10,6 @@ import {
 } from "react-native-gesture-handler";
 
 import { LensClient, production } from "@lens-protocol/client";
-import dayjs from "dayjs";
-import trendingMints from "../components/trendingMInts";
-import { interval } from "../utils/contants";
-import TrendingMintsSwiper from "../components/TrendingMintsSwipper";
 
 const lensClient = new LensClient({
   environment: production,
@@ -167,26 +163,7 @@ const Index = () => {
 
   const swipes = Gesture.Race(swipeForward, swipeBackward);
 
-  // const m: any = [];
-  const mintsDataRef = useRef<any[]>([]);
 
-  const currentTime = dayjs();
-  const getData = async () => {
-    console.log('hii');
-    const data = await trendingMints(currentTime);
-    console.log('data : ', data);
-    mintsDataRef.current = data;
-    data.length > 0 && data.map((data: any, i: Number) => {
-      const { token, score } = data;
-      const message = `${token?.name} have been minted more than ${score} times
-    the last ${interval} hours`;
-      console.log(message);
-    });
-  }
-
-  getData();
-
-  console.log('mitns Data : ', mintsDataRef.current);
 
   return (
     <GestureDetector gesture={swipes}>

@@ -6,7 +6,7 @@ import {
   TextInput,
   View,
 } from "react-native";
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import { ScrollView } from "react-native-gesture-handler";
 import { SafeAreaView } from "react-native-safe-area-context";
 import { FontAwesome5 } from "@expo/vector-icons";
@@ -14,34 +14,34 @@ import AllSongs from "../../components/expolore/AllSongs";
 import AllAlbums from "../../components/expolore/AllAlbums";
 import AllArtist from "../../components/expolore/AllArtist";
 import { Link, router } from "expo-router";
-import dayjs from "dayjs";
-import trendingMints from "../../components/trendingMInts";
-import { interval } from "../../utils/contants";
+import { Profiles } from "@lens-protocol/react-native-lens-ui-kit";
 import TrendingMintsSwiper from "../../components/TrendingMintsSwipper";
 
 export default function TabOneScreen() {
-  const [data, setData] = useState<any>(null);
-  console.log("data : ", data);
+  // // const m: any = [];
+  // const mintsDataRef = useRef<any[]>([]);
+  // // console.log("data : ", data);
 
-  useEffect(() => {
-    const currentTime = dayjs();
+  // useEffect(() => {}, []);
 
-    const getData = async () => {
-      console.log("hii");
-      const dataresult = await trendingMints(currentTime);
-      console.log("dataresult : ", dataresult);
-      setData(dataresult);
-      data.length > 0 &&
-        data.map((data: any, i: Number) => {
-          const { token, score } = data;
-          const message = `${token?.name} have been minted more than ${score} times
-      the last ${interval} hours`;
-          console.log(message);
-        });
-    };
+  // const currentTime = dayjs();
+  // const getData = async () => {
+  //   console.log("hii");
+  //   const data = await trendingMints(currentTime);
+  //   console.log("data : ", data);
+  //   mintsDataRef.current = data;
+  //   data.length > 0 &&
+  //     data.map((data: any, i: Number) => {
+  //       const { token, score } = data;
+  //       const message = `${token?.name} have been minted more than ${score} times
+  //   the last ${interval} hours`;
+  //       console.log(message);
+  //     });
+  // };
 
-    getData();
-  }, []);
+  // getData();
+
+  // console.log("mitns Data : ", mintsDataRef.current);
   return (
     <SafeAreaView className="min-h-screen flex-1">
       <ScrollView
@@ -54,52 +54,10 @@ export default function TabOneScreen() {
       >
         {/** header view */}
 
-        <View className="pb-[40px]">
-          <View className="flex-row items-center p-3 justify-between">
-            <View className="flex-row items-start space-x-4">
-              <Link href="/createProfile">
-                <Image
-                  source={require("../../assets/images/profile.jpg")}
-                  className="w-[50px] g-[50px] rounded-full object-contain"
-                />
-              </Link>
-
-              <View>
-                <Text className="text-[16px] font-semibold text-[#fff]">
-                  {data ? data.slice(0, 9) : "Account1"}
-                </Text>
-                <Text className="text-[14px] text-[#DEDEDE] font-medium">
-                  Gold Member
-                </Text>
-              </View>
-            </View>
-            <View className="flex-row items-center space-x-5">
-              <FontAwesome5 name="bell" color="#fff" size={20} />
-              <Pressable onPress={() => router.push("/create")} className="">
-                <FontAwesome5 name="plus" color="#fff" size={20} />
-              </Pressable>
-            </View>
-          </View>
-          <View className="flex-row items-center p-3 justify-between">
-            <Text className="text-[26px] font-semibold text-[#fff] w-[50%]">
-              Listen To The Latest Musics
-            </Text>
-            <View className="bg-transparent border border-[#fff] flex-row items-center space-x-3 w-[50%] p-3 rounded-[40px]">
-              <FontAwesome5 name="search" color="#fff" size={10} />
-              <TextInput
-                placeholder="Search"
-                placeholderTextColor="#fff"
-                className="w-fit text-[#fff]"
-              />
-            </View>
-          </View>
-        </View>
-         <TrendingMintsSwiper data={data} />
-        <View className="space-y-[20px]">
-          <AllSongs />
-          <AllAlbums />
-          <AllArtist />
-        </View>
+   
+        <AllSongs />
+        <AllAlbums />
+        <AllArtist />
       </ScrollView>
     </SafeAreaView>
   );

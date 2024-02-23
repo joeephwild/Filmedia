@@ -13,6 +13,16 @@ import { AuthProvider } from "../context/AuthContext";
 import { GestureHandlerRootView } from "react-native-gesture-handler";
 import "react-native-gesture-handler";
 import { PortalProvider } from "@gorhom/portal";
+import { init } from "@airstack/airstack-react";
+
+import { LensClient, production } from "@lens-protocol/client";
+
+export const lensClient = new LensClient({
+  environment: production,
+});
+
+const AIRSTACK_API_KEY = "1b12f927657d44dce9727a129dc65907a";
+init(AIRSTACK_API_KEY);
 
 const projectId = "faacd6df1eda3779a685e127d4cac05a";
 

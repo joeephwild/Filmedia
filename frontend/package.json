@@ -20,6 +20,7 @@
     "@gorhom/portal": "^1.0.14",
     "@lens-protocol/client": "^2.0.0-alpha.32",
     "@lens-protocol/react-native": "^0.1.0-alpha.9",
+    "@lens-protocol/react-native-lens-ui-kit": "^0.2.9",
     "@react-native-async-storage/async-storage": "1.18.2",
     "@react-native-community/netinfo": "9.3.10",
     "@react-native-community/slider": "4.4.2",
@@ -61,7 +62,9 @@
     "react-native-svg": "13.9.0",
     "react-native-swiper": "^1.6.0",
     "react-native-user-avatar": "^1.0.8",
-    "react-native-web": "~0.19.6"
+    "react-native-video": "^5.2.1",
+    "react-native-web": "~0.19.6",
+    "recoil": "^0.7.7"
   },
   "devDependencies": {
     "@babel/core": "^7.20.0",

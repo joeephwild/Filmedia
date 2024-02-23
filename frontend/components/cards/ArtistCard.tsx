@@ -1,40 +1,56 @@
-import { View, Text, Image } from "react-native";
+import { View, Text, Image, TouchableOpacity } from "react-native";
 import React, { useEffect, useState } from "react";
 import { Link } from "expo-router";
-// import useGetArtist from "../../constants/hooks/useGetArtist";
-// import { artistFTAddress } from "../../constants/addresses";
+import { lensClient } from "../../app/_layout";
 
 type Props = {
-  name: string;
-  description: string;
-  image: string;
-  owner: string
+  item: any;
 };
 
-const ArtistCard = ({ name, description, image , owner}: Props) => {
-  // const [imageURI, tokenName, tokenDescription, category] = useGetArtist(
-  //   id,
-  //   artistFTAddress
-  // );
-
+const ArtistCard = ({ item }: Props) => {
+  console.log(item.profileTokenIdHex);
+  const Follow = async () => {
+    const result = await lensClient.profile.follow({
+      follow: [
+        {
+          profileId: item?.profileTokenIdHex,
+        },
+      ],
+    });
+  };
   return (
-    <Link href={{ pathname: `/artist/${owner}`, params: { address: owner } }}>
-      <View className="flex-row items-center space-x-3 pb-5">
-        <Text className="text-[14px] text-[#fff] font-bold">1</Text>
-        <View className="flex-row items-center space-x-8">
-          <Image
-            source={{
-              uri: image,
-            }}
-            className="w-[90px] rounded-full h-[90px] bg-black"
-          />
-          <View>
-            <Text className="text-[14px] text-[#fff] font-bold">{name}</Text>
-            <Text className="text-[10px] w-[50%] text-[#808080] font-bold">
-              {description}
-            </Text>
-          </View>
+    <Link
+      href={{
+        pathname: `/artist/${item.userAddress}`,
+        params: {
+          address: item?.userAddress,
+          image: item?.profileImageContentValue?.image?.original,
+          name: item?.profileDisplayName,
+          follower: item?.followerCount,
+          following: item?.followingCount,
+        },
+      }}
+    >
+      <View className="flex-row w-[70%] pt-5 items-center space-x-8">
+        <Image
+          source={{
+            uri: item?.profileImageContentValue?.image?.original
+              ? item?.profileImageContentValue?.image?.original
+              : "https://img.freepik.com/free-psd/3d-illustration-human-avatar-profile_23-2150671142.jpg?size=338&ext=jpg&ga=GA1.1.1803636316.1708214400&semt=ais",
+          }}
+          className="w-[60px] rounded-full h-[60px] bg-black"
+        />
+        <View className="w-[40%]">
+          <Text className="text-[17px] text-[#fff] font-bold">
+            {item?.profileDisplayName
+              ? item?.profileDisplayName
+              : item?.profileName}
+          </Text>
+          <Text className="text-gray-500">{item?.profileBio}</Text>
         </View>
+        <TouchableOpacity className="bg-[#ADF802] px-8 py-2.5 rounded-lg">
+          <Text>Follow</Text>
+        </TouchableOpacity>
       </View>
     </Link>
   );

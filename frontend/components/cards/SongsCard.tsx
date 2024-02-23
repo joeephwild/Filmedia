@@ -2,9 +2,6 @@ import { View, Text, Image, TouchableOpacity, Pressable } from "react-native";
 import React from "react";
 import FontAwesome from "@expo/vector-icons/FontAwesome";
 import { Link } from "expo-router";
-import useGetNFTs from "../../constants/hooks/useGetNFT";
-import { artistNFTAddress } from "../../constants/addresses";
-import { Audio } from "expo-av";
 import { useAuth } from "../../context/AuthContext";
 
 type Props = {
@@ -19,15 +16,9 @@ type Props = {
 const SongsCard = ({
   image,
   name,
-  tokenId,
   external_url,
-  description,
   artist,
 }: Props) => {
-  // const [imageURI, tokenName, tokenDescription, category] = useGetNFTs(
-  //   tokenId,
-  //   artistNFTAddress
-  // );
   const { playSound, currentlyPlayed, isPlaying, pauseSound } = useAuth();
 
   async function handlePlaySound() {
@@ -62,9 +53,6 @@ const SongsCard = ({
             <Text className="text-[#fff] text-[14px] font-semibold">
               {name}
             </Text>
-            {/* <Text className="text-[#fff] w-[200px] text-[12px] font-semibold">
-              {description}
-            </Text> */}
           </View>
         </View>
       </View>
