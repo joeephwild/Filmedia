@@ -54,8 +54,9 @@ export default function TabOneScreen() {
       >
         {/** header view */}
 
-   
+
         <AllSongs />
+        <TrendingMintsSwiper />
         <AllAlbums />
         <AllArtist />
       </ScrollView>
