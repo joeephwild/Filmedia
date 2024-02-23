@@ -8,9 +8,22 @@ type Props = {
 };
 
 const ArtistCard = ({ item }: Props) => {
-  console.log(item.profileTokenIdHex);
+  const [isFollowedByMe, setIsFollowedByMe] = useState(false);
+
+  useEffect(() => {
+    const checkFollowStatus = async () => {
+      const result = await lensClient.profile.fetch({
+        forProfileId: "0x018509",
+      });
+      // console.log(result)
+      // setIsFollowedByMe(isFollowedByMe);
+    };
+
+    checkFollowStatus();
+  }, [item]);
+
   const Follow = async () => {
-    const result = await lensClient.profile.follow({
+    const { unwrap, isFailure, isSuccess} = await lensClient.profile.follow({
       follow: [
         {
           profileId: item?.profileTokenIdHex,
@@ -18,6 +31,7 @@ const ArtistCard = ({ item }: Props) => {
       ],
     });
   };
+  console.log(item?.profileTokenIdHex)
   return (
     <Link
       href={{
@@ -28,6 +42,7 @@ const ArtistCard = ({ item }: Props) => {
           name: item?.profileDisplayName,
           follower: item?.followerCount,
           following: item?.followingCount,
+          id: item?.profileTokenIdHex
         },
       }}
     >
@@ -48,8 +63,8 @@ const ArtistCard = ({ item }: Props) => {
           </Text>
           <Text className="text-gray-500">{item?.profileBio}</Text>
         </View>
-        <TouchableOpacity className="bg-[#ADF802] px-8 py-2.5 rounded-lg">
-          <Text>Follow</Text>
+        <TouchableOpacity onPress={Follow} className="bg-[#ADF802] px-8 py-2.5 rounded-lg">
+          <Text>{isFollowedByMe ? "Following" : "Follow"}</Text>
         </TouchableOpacity>
       </View>
     </Link>

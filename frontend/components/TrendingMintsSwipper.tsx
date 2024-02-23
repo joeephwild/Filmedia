@@ -58,7 +58,7 @@ const RenderMintCard = ({ item }: any) => {
         mt-7  py-2 rounded-full bg-[#ADF802] text-black`}
       >
         <View className="flex-row items-center">
-          <FontAwesome name='heart' size={18} color="red" />
+          {/* <FontAwesome name='heart' size={18} color="red" /> */}
           <Text
             className={` font-bold ml-4 text-lg`}
           >
@@ -167,62 +167,5 @@ const TrendingMintsSwiper = ({ data }: any) => {
 
   );
 };
-
-// const styles = StyleSheet.create({
-//   container: {
-//     backgroundColor: 'white',
-//     borderRadius: 8,
-//     width: ITEM_WIDTH,
-//     paddingBottom: 40,
-//     shadowColor: "#000",
-//     shadowOffset: {
-//       width: 0,
-//       height: 3,
-//     },
-//     shadowOpacity: 0.29,
-//     shadowRadius: 4.65,
-//     elevation: 7,
-//   },
-//   image: {
-//     width: ITEM_WIDTH,
-//     height: 300,
-//   },
-//   header: {
-//     color: "#222",
-//     fontSize: 28,
-//     fontWeight: "bold",
-//     paddingLeft: 20,
-//     paddingTop: 20
-//   },
-//   body: {
-//     color: "#222",
-//     fontSize: 18,
-//     paddingLeft: 20,
-//     paddingRight: 20
-//   }
-// })
-
-// const styles = StyleSheet.create({
-//   swiper: {
-//     flex: 1,
-//   },
-//   slide: {
-//     flex: 1,
-//     justifyContent: "center",
-//     alignItems: "center",
-//     backgroundColor: "#fff",
-//     // height: 100,
-//   },
-//   image: {
-//     width: 100,
-//     height: 100,
-//     resizeMode: "cover",
-//   },
-//   message: {
-//     textAlign: "center",
-//     color: "#333",
-//     padding: 5,
-//   },
-// });
 
 export default TrendingMintsSwiper;

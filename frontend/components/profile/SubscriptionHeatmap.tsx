@@ -59,7 +59,7 @@ const SubscriptionHeatmap = () => {
             {months.map((item, index) => (
               <View
                 key={index}
-                style={{ width: 17, height: 17, backgroundColor: "#0A2B59" }}
+                style={{ width: 17, height: 17, backgroundColor: "#ADF802" }}
               />
             ))}
           </View>

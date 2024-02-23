@@ -7,7 +7,7 @@ import {
 import FontAwesome from "@expo/vector-icons/FontAwesome";
 import { useFonts } from "expo-font";
 import { SplashScreen, Stack, router } from "expo-router";
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import { useColorScheme } from "react-native";
 import { AuthProvider } from "../context/AuthContext";
 import { GestureHandlerRootView } from "react-native-gesture-handler";
@@ -80,14 +80,28 @@ export default function RootLayout() {
 function RootLayoutNav() {
   const { isOpen, open, close, provider, isConnected, address } =
     useWalletConnectModal();
+  const [isAuth, setIsAuth] = useState(false);
 
   useEffect(() => {
-    if (address) {
+    const checkAuth = async () => {
+      const isAuthenticated = await lensClient.authentication.isAuthenticated();
+      console.log(isAuthenticated);
+      setIsAuth(isAuthenticated);
+    };
+
+    if (isAuth) {
       router.push("/(tabs)");
-    } else {
-      router.push("/");
     }
-  }, [address]);
+    checkAuth();
+  }, [isAuth]);
+
+  // useEffect(() => {
+  //   if (address) {
+  //     router.push("/(tabs)");
+  //   } else {
+  //     router.push("/");
+  //   }
+  // }, [address]);
   return (
     <GestureHandlerRootView style={{ flex: 1 }}>
       <PortalProvider>

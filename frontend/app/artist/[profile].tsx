@@ -5,59 +5,7 @@ import { TouchableOpacity, ScrollView } from "react-native-gesture-handler";
 import SubscriptionHeatmap from "../../components/profile/SubscriptionHeatmap";
 import PaymentModal from "../../components/PaymentModal";
 import { useLocalSearchParams } from "expo-router";
-
-// import { Feed } from "@lens-protocol/react-native-lens-ui-kit";
-
-const query = `
-query MyQuery {
-  Socials(
-    input: {filter: {userAssociatedAddresses: {_eq: "0xa5a2f2207a138b4E7624ac50C0bF981889f19ec8"}, dappName: {_eq: lens}}, blockchain: ethereum}
-  ) {
-    Social {
-       dappName
-        profileName
-        profileBio
-        profileDisplayName
-        profileImage
-        profileUrl
-        followerCount
-        followingCount
-        userAddress
-        userCreatedAtBlockTimestamp
-        userCreatedAtBlockNumber
-        userLastUpdatedAtBlockTimestamp
-        userLastUpdatedAtBlockNumber
-        userHomeURL
-        userRecoveryAddress
-        userAssociatedAddresses
-        profileCreatedAtBlockTimestamp
-        profileCreatedAtBlockNumber
-        profileLastUpdatedAtBlockTimestamp
-        profileLastUpdatedAtBlockNumber
-        profileTokenUri
-        profileImageContentValue {
-          image {
-            extraSmall
-            small
-            medium
-            large
-            original
-          }
-        }
-        coverImageContentValue {
-          image {
-            extraSmall
-            small
-            medium
-            large
-            original
-          }
-        }
-    }
-  }
-}
-`;
-
+import { lensClient } from "../_layout";
 interface ArtistProfile {
   name: string;
   owner: string;
@@ -74,8 +22,23 @@ const ArtistProfile = () => {
   const [modalVisible, setModalVisible] = useState(false);
   const [artistprofile, setArtistProfile] = useState<ArtistProfile>();
   const params = useLocalSearchParams();
-  const { address, name, image, follower, following } = params;
-  console.log(follower, following);
+  const { address, name, image, follower, following, id } = params;
+
+  useEffect(() => {
+    const feed = async () => {
+      try {
+        const publication = await lensClient.publication.fetch({
+          forId: "0x533e",
+        });
+        // Handle the publication here
+        console.log(publication);
+      } catch (error) {
+        // Handle the error here
+        console.error(error);
+      }
+    };
+    feed();
+  }, []);
 
   return (
     <ScrollView

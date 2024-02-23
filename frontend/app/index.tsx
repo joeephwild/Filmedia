@@ -7,13 +7,14 @@ import {
   Directions,
   Gesture,
   GestureDetector,
+  ScrollView,
 } from "react-native-gesture-handler";
+import BottomSheet, { BottomSheetMethods } from "@devvie/bottom-sheet";
+import { lensClient } from "./_layout";
+import { Portal } from "@gorhom/portal";
+import { PaginatedResult, ProfileFragment } from "@lens-protocol/client";
+import ProfileCard from "../components/ProfileCard";
 
-import { LensClient, production } from "@lens-protocol/client";
-
-const lensClient = new LensClient({
-  environment: production,
-});
 const onBoradingSteps = [
   {
     title: "Welcome to Filmedia, where Social Content and blockchain unite!",
@@ -39,37 +40,11 @@ const onBoradingSteps = [
 ];
 
 const Index = () => {
-  // useEffect(() => {
-  //   const getNFTs = async (ipfsHashes) => {
-  //     const fetchPromises = ipfsHashes.map(async (hash) => {
-  //       try {
-  //         const response = await fetch(`https://gateway.pinata.cloud/ipfs/${hash}`);
-  //         const json = await response.json(); // Extract JSON from the response
-
-  //         if (typeof json === 'string') {
-  //           // If the JSON is a string, parse it again
-  //           return JSON.parse(json);
-  //         } else {
-  //           // Otherwise, return the JSON as is
-  //           return json;
-  //         }
-  //       } catch (error) {
-  //         console.error('Error:', error);
-  //       }
-  //     });
-
-  //     const data = await Promise.all(fetchPromises);
-  //     console.log(data); // Log the data for debugging
-  //     // You can now use the data here
-  //   };
-
-  //   const ipfsHashes = ['QmNT9dVCgGfxEViKZzYLhH114rgiYDT227cVDYVz1y3zvH', 'QmYGgPqaC483J5B9KczHRV9t1fDRkFtiLo5J2zMvqcZWuv'];
-  //   getNFTs(ipfsHashes); // Call the function
-  // }, []);
-  const { open,  provider, isConnected, address } =
-    useWalletConnectModal();
-  console.log(address);
+  const sheetRef = useRef<BottomSheetMethods>(null);
+  const { open, provider, isConnected, address } = useWalletConnectModal();
   const [profileId, setProfileId] = useState("");
+  const [profile, setProfile] = useState<ProfileFragment[]>();
+
 
   useEffect(() => {
     const getProfiles = async () => {
@@ -77,7 +52,7 @@ const Index = () => {
         const allOwnedProfiles = await lensClient.profile.fetchAll({
           where: { ownedBy: [address] },
         });
-
+        setProfile(allOwnedProfiles.items);
         // Assuming the first profile's handle is what we want to set as profileId
         const firstProfileHandle = allOwnedProfiles.items[0]?.id;
         if (firstProfileHandle) {
@@ -94,28 +69,7 @@ const Index = () => {
       }
     };
     getProfiles();
-  }, []);
-
-  const signInToLens = async () => {
-    if (address) {
-      const { id, text } = await lensClient.authentication.generateChallenge({
-        signedBy: address, // e.g "0xdfd7D26fd33473F475b57556118F8251464a24eb"
-        for: profileId, // e.g "0x01"
-      });
-      console.log(id, text);
-      const signature =
-        provider?.request({
-          method: "personal_sign",
-          params: [text, address],
-        }) || null;
-      const res = await lensClient.authentication.authenticate({
-        id,
-        // @ts-ignore
-        signature,
-      });
-      console.log(res);
-    }
-  };
+  }, [address]);
 
   const [currentIndex, setCurrentIndex] = useState(0);
 
@@ -162,8 +116,6 @@ const Index = () => {
     });
 
   const swipes = Gesture.Race(swipeForward, swipeBackward);
-
-
 
   return (
     <GestureDetector gesture={swipes}>
@@ -218,7 +170,7 @@ const Index = () => {
               {address ? (
                 <View className="w-full">
                   <TouchableOpacity
-                    onPress={() => router.push("/(tabs)")}
+                    onPress={() => sheetRef.current?.open()}
                     className="bg-[#ADF802] rounded-[40px] py-[16px] px-[40px] mt-[20px] items-center justify-center"
                   >
                     <Text className="text-[16px]  font-opensans-bold text-[#000]">
@@ -249,10 +201,25 @@ const Index = () => {
             </View>
           )}
         </View>
-        {/* <Text style={{ fontSize: 24, textAlign: "center", marginTop: 20 }}>
-          Trending Mints
-        </Text>
-        <TrendingMintsSwiper data={mintsData} /> */}
+        <Portal>
+          <BottomSheet
+            style={{
+              backgroundColor: "#000",
+            }}
+            
+            ref={sheetRef}
+          >
+            <ScrollView style={{
+              minHeight: "100%"
+            }} showsVerticalScrollIndicator={false} contentContainerStyle={{
+              paddingHorizontal: 8
+            }}>
+              {profile?.map((item, index) => (
+                <ProfileCard key={index} profile={item} close={sheetRef.current?.close()} />
+              ))}
+            </ScrollView>
+          </BottomSheet>
+        </Portal>
       </View>
     </GestureDetector>
   );
