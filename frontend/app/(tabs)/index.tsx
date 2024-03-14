@@ -37,7 +37,6 @@ export default function TabOneScreen() {
         </View>
 
         <AllSongs />
-        <TrendingMintsSwiper />
         <AllAlbums />
         <AllArtist />
       </ScrollView>

@@ -1,11 +1,13 @@
 import { View, Text, ImageBackground } from "react-native";
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, useRef } from "react";
 import { LinearGradient } from "expo-linear-gradient";
 import { TouchableOpacity, ScrollView } from "react-native-gesture-handler";
 import SubscriptionHeatmap from "../../components/profile/SubscriptionHeatmap";
-import PaymentModal from "../../components/PaymentModal";
+import BottomSheet, { BottomSheetMethods } from "@devvie/bottom-sheet";
 import { useLocalSearchParams } from "expo-router";
 import { lensClient } from "../_layout";
+import { Portal } from "@gorhom/portal";
+import { FontAwesome, FontAwesome5 } from "@expo/vector-icons";
 interface ArtistProfile {
   name: string;
   owner: string;
@@ -18,11 +20,46 @@ interface ArtistProfile {
   }[];
 }
 
+const options = [
+  {
+    period: "Month",
+    pirce: 1,
+  },
+  {
+    period: "3 Month",
+    pirce: 1,
+  },
+  {
+    period: "6 Month",
+    pirce: 1,
+  },
+];
+
+const benefit = [
+  {
+    icon: "certificate",
+    title: "Dynamic NFTs",
+    description: "Access to exclusive dynamic NFTs that change over time.",
+  },
+  {
+    icon: "shield-alt",
+    title: "No Ads Viewing",
+    description: "Enjoy an ad-free experience while viewing content.",
+  },
+  {
+    icon: "comments",
+    title: "Subscribers Chat",
+    description:
+      "Join a private chat with other subscribers for exclusive discussions.",
+  },
+];
+
 const ArtistProfile = () => {
   const [modalVisible, setModalVisible] = useState(false);
   const [artistprofile, setArtistProfile] = useState<ArtistProfile>();
   const params = useLocalSearchParams();
   const { address, name, image, follower, following, id } = params;
+  const sheetRef = useRef<BottomSheetMethods>(null);
 
   useEffect(() => {
     const feed = async () => {
@@ -92,7 +129,7 @@ const ArtistProfile = () => {
         </View>
         <View style={{ flexDirection: "row", justifyContent: "center" }}>
           <TouchableOpacity
-            onPress={() => setModalVisible(true)}
+            onPress={() => sheetRef.current?.open()}
             style={{
               marginTop: 29,
               paddingHorizontal: 24,
@@ -105,7 +142,7 @@ const ArtistProfile = () => {
             className="mx-auto mr-4"
           >
             <Text style={{ fontSize: 12, fontWeight: "bold", color: "#000" }}>
-              Subscribe for $5
+              Subscribe
             </Text>
           </TouchableOpacity>
           <TouchableOpacity
@@ -135,12 +172,71 @@ const ArtistProfile = () => {
         <Albums /> */}
         {/* <Feed profileId="" /> */}
       </View>
-      <PaymentModal
-        modalVisible={modalVisible}
-        setModalVisible={setModalVisible}
-        depositing={false}
-        artirstAddress={address}
-      />
+      <Portal>
+        <BottomSheet height={500} ref={sheetRef}>
+          <View className="px-3">
+            <View className="flex-row items-center justify-evenly">
+              <FontAwesome5 name="arrow-left" color="#000" size={24} />
+              <Text className="text-[18px] font-bold">Subscribe to {name}</Text>
+            </View>
+            <View className="mt-9">
+              <Text className="text-[16px] font-bold font-opensans-bold">
+                Tier 1 Subscription
+              </Text>
+              <Text className="text-[12px] font-opensans-regular font-medium pt-2">
+                Susbscribe to {name} and get more benefit and join the {name}{" "}
+                community and also get to support the creator.
+              </Text>
+              <View className="flex-row gap-5 py-4">
+                {options.map((item, i) => (
+                  <TouchableOpacity
+                    key={i}
+                    className="w-[100px] h-[100px] border-[#ADF802] border"
+                  >
+                    <Text className="font-opensans-bold">{item.period}</Text>
+                    <Text className="pt-[60px] font-opensans-regular">
+                      ${item.pirce}/month
+                    </Text>
+                  </TouchableOpacity>
+                ))}
+              </View>
+              <View className="w-full">
+                <TouchableOpacity className="bg-[#ADF802] w-full items-center justify-center py-[9px]">
+                  <Text className="font-opensans-bold">Subscribe</Text>
+                </TouchableOpacity>
+                <Text className="text-center font-opensans-regular ">
+                  By subscribing you accept the Filmedia terms of sale and
+                  acknowledge our privacy policy
+                </Text>
+              </View>
+
+              <View>
+                <Text className="font-opensans-bold pt-5">
+                  Subscriber benefit
+                </Text>
+                <View className="flex-row items-center gap-5 py-3">
+                  {benefit.map((item, i) => (
+                    <View key={i}>
+                      <FontAwesome5
+                        name={item.icon}
+                        size={24}
+                        color="#000"
+                        style={{ marginRight: 10 }}
+                      />
+                      <Text style={{ fontSize: 12, fontWeight: "bold" }}>
+                        {item.title}
+                      </Text>
+                      {/* <Text style={{ fontSize: 14, color: "#666" }}>
+                        {item.description}
+                      </Text> */}
+                    </View>
+                  ))}
+                </View>
+              </View>
+            </View>
+          </View>
+        </BottomSheet>
+      </Portal>
     </ScrollView>
   );
 };
