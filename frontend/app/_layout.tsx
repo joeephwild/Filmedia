@@ -28,7 +28,8 @@ const projectId = "faacd6df1eda3779a685e127d4cac05a";
 
 const providerMetadata = {
   name: "Filmedia",
-  description: "Filmedia: Revolutionizing Content Creation on Web3 - Earn, Connect, and Stand Out with Subscription-based payments and Exclusive Dynamic NFT Certificates! ",
+  description:
+    "Filmedia: Revolutionizing Content Creation on Web3 - Earn, Connect, and Stand Out with Subscription-based payments and Exclusive Dynamic NFT Certificates! ",
   url: "https://your-project-website.com/",
   icons: ["https://your-project-logo.com/"],
   redirect: {
@@ -131,6 +132,13 @@ function RootLayoutNav() {
             <Stack.Screen
               name="createProfile"
               options={{ headerShown: false }}
+            />
+            <Stack.Screen
+              name="successMessage"
+              options={{
+                presentation: "modal",
+                headerShown: false
+              }}
             />
           </Stack>
         </AuthProvider>

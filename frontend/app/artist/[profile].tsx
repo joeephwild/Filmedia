@@ -4,7 +4,7 @@ import { LinearGradient } from "expo-linear-gradient";
 import { TouchableOpacity, ScrollView } from "react-native-gesture-handler";
 import SubscriptionHeatmap from "../../components/profile/SubscriptionHeatmap";
 import BottomSheet, { BottomSheetMethods } from "@devvie/bottom-sheet";
-import { useLocalSearchParams } from "expo-router";
+import { router, useLocalSearchParams } from "expo-router";
 import { lensClient } from "../_layout";
 import { Portal } from "@gorhom/portal";
 import { FontAwesome, FontAwesome5 } from "@expo/vector-icons";
@@ -201,7 +201,7 @@ const ArtistProfile = () => {
                 ))}
               </View>
               <View className="w-full">
-                <TouchableOpacity className="bg-[#ADF802] w-full items-center justify-center py-[9px]">
+                <TouchableOpacity onPress={() => router.push("/successMessage")} className="bg-[#ADF802] w-full items-center justify-center py-[9px]">
                   <Text className="font-opensans-bold">Subscribe</Text>
                 </TouchableOpacity>
                 <Text className="text-center font-opensans-regular ">
